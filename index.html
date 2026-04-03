@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>倫理マッチング - 宗教編</title>
+<title>総合・倫理思想マッチング</title>
 <style>
-  /* ここはデザイン（CSS）です */
+  /* --- デザイン（CSS） --- */
   body { 
     font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif; 
-    background-color: #f4f7f6; 
+    background-color: #f0f4f8; 
     color: #333;
+    margin: 0;
     padding: 20px;
     display: flex;
     justify-content: center;
@@ -17,137 +18,263 @@
   .container { 
     background: white; 
     width: 100%;
-    max-width: 500px; 
+    max-width: 600px; 
     padding: 30px; 
     border-radius: 12px; 
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1); 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08); 
     text-align: center;
   }
-  h1 { font-size: 22px; color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px;}
-  #question { font-size: 18px; margin: 20px 0; font-weight: bold; }
-  button { 
-    display: block; 
-    width: 100%; 
-    padding: 15px; 
-    margin: 12px 0; 
-    font-size: 16px; 
-    cursor: pointer; 
-    border: 2px solid #3498db; 
-    border-radius: 8px; 
-    background-color: white; 
-    color: #3498db; 
-    transition: 0.2s; 
-    font-weight: bold;
+  h1 { font-size: 24px; color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 15px; margin-bottom: 25px;}
+  h2 { font-size: 20px; color: #34495e; margin-bottom: 15px;}
+  
+  .menu-btn {
+    display: block; width: 100%; padding: 15px; margin: 10px 0;
+    font-size: 16px; font-weight: bold; cursor: pointer;
+    border: none; border-radius: 8px;
+    background-color: #ecf0f1; color: #2c3e50;
+    transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
   }
-  button:hover { background-color: #3498db; color: white; }
-  #result { display: none; } /* 最初は結果を隠しておく */
-  .result-title { font-size: 28px; color: #e74c3c; margin: 15px 0; }
-  .result-desc { font-size: 16px; line-height: 1.6; text-align: left; background: #fdf2f0; padding: 15px; border-radius: 8px;}
+  .menu-btn:hover { background-color: #3498db; color: white; transform: translateY(-2px);}
+  
+  .choice-btn { 
+    display: block; width: 100%; padding: 15px; margin: 12px 0; 
+    font-size: 16px; cursor: pointer; border: 2px solid #3498db; 
+    border-radius: 8px; background-color: white; color: #3498db; 
+    font-weight: bold; transition: 0.2s; text-align: left; line-height: 1.4;
+  }
+  .choice-btn:hover { background-color: #3498db; color: white; }
+  
+  #question-text { font-size: 18px; margin: 20px 0; font-weight: bold; line-height: 1.5; text-align: left;}
+  #question-number { color: #7f8c8d; font-size: 14px; font-weight: bold;}
+  
+  #home-screen, #quiz-screen, #result-screen { display: none; }
+  .active-screen { display: block !important; }
+
+  .result-title { font-size: 32px; color: #e74c3c; margin: 15px 0; font-weight: bold;}
+  .result-desc { font-size: 16px; line-height: 1.8; text-align: left; background: #fdf2f0; padding: 20px; border-radius: 8px; margin-bottom: 20px;}
+  .back-btn { background-color: #2c3e50; color: white; border: none; padding: 15px; border-radius: 8px; width: 100%; font-size: 16px; cursor: pointer; font-weight: bold;}
 </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>🌍 倫理思想マッチング（宗教編）</h1>
   
-  <div id="quiz">
-    <p id="question-number" style="color: #7f8c8d; font-size: 14px;"></p>
-    <div id="question">質問がここに出ます</div>
-    <div id="choices"></div>
+  <div id="home-screen" class="active-screen">
+    <h1>📚 倫理思想マッチング</h1>
+    <p>キミの考え方は、歴史上のどの思想家と同じ？<br>気になるカテゴリを選んで診断しよう！</p>
+    
+    <button class="menu-btn" onclick="startQuiz('religion')">１．宗教 match（5問）</button>
+    <button class="menu-btn" onclick="startQuiz('normative')">２．規範倫理学 match（5問）</button>
+    
+    <button class="menu-btn" onclick="alert('現在作成中です！お楽しみに！')" style="opacity: 0.6;">３．古代ギリシャ哲学 match（準備中）</button>
+    <button class="menu-btn" onclick="alert('現在作成中です！お楽しみに！')" style="opacity: 0.6;">４．近代科学 match（準備中）</button>
+    <button class="menu-btn" onclick="alert('現在作成中です！お楽しみに！')" style="opacity: 0.6;">５．社会契約論 match（準備中）</button>
+    <button class="menu-btn" onclick="alert('現在作成中です！お楽しみに！')" style="opacity: 0.6;">６．実存主義・マルクス match（準備中）</button>
+    <button class="menu-btn" onclick="alert('現在作成中です！お楽しみに！')" style="opacity: 0.6;">７．中国思想 match（準備中）</button>
+    <button class="menu-btn" onclick="alert('現在作成中です！お楽しみに！')" style="opacity: 0.6;">８．日本思想 match（準備中）</button>
   </div>
 
-  <div id="result">
+  <div id="quiz-screen">
+    <h2 id="category-title">カテゴリ名</h2>
+    <p id="question-number"></p>
+    <div id="question-text">質問がここに出ます</div>
+    <div id="choices-container"></div>
+  </div>
+
+  <div id="result-screen">
     <h2>あなたにピッタリの思想は…</h2>
     <div class="result-title" id="result-name"></div>
     <div class="result-desc" id="result-desc"></div>
-    <button onclick="location.reload()" style="background-color: #2c3e50; color: white; border-color: #2c3e50; margin-top: 20px;">最初からやり直す</button>
+    <button class="back-btn" onclick="goHome()">トップメニューに戻る</button>
   </div>
+
 </div>
 
 <script>
-  /* ここから裏側の仕組み（JavaScript）です */
-  
-  // 質問と、選んだ時にどの宗教に何点入るかの設定
-  const questions = [
-    {
-      text: "この世界の成り立ちについて、どう思う？",
-      choices: [
-        { text: "絶対的な神が世界を創造したと思う", scores: { buddhism: 0, christianity: 1, islam: 1 } },
-        { text: "神が創ったというより、あらゆるものは繋がり変化し続けている", scores: { buddhism: 2, christianity: 0, islam: 0 } }
-      ]
+  /* --- データ（質問と結果） --- */
+  const quizData = {
+    // ========== １．宗教（5問） ==========
+    religion: {
+      title: "宗教 match",
+      scores: { buddhism: 0, christianity: 0, islam: 0 },
+      questions: [
+        {
+          text: "Q1. 世界や宇宙は、どうやってできたと思う？",
+          choices: [
+            { text: "すべては繋がり合って、絶えず変化しながら存在している", scores: { buddhism: 2, christianity: 0, islam: 0 } },
+            { text: "人間を深く愛する神様が、世界を美しく創り上げた", scores: { buddhism: 0, christianity: 2, islam: 0 } },
+            { text: "偉大で絶対的な唯一の神が、全知全能の力で創造した", scores: { buddhism: 0, christianity: 0, islam: 2 } }
+          ]
+        },
+        {
+          text: "Q2. 人生で一番「ツラいこと・苦しいこと」があった時、どう捉える？",
+          choices: [
+            { text: "「神様が与えた試練だ」と捉え、乗り越えられると信じて祈る", scores: { buddhism: 0, christianity: 2, islam: 0 } },
+            { text: "「すべては神様の計画通り（定命）」と受け入れ、運命に従う", scores: { buddhism: 0, christianity: 0, islam: 2 } },
+            { text: "「自分の過度な欲求や執着が原因だ」と考え、心を見つめ直す", scores: { buddhism: 2, christianity: 0, islam: 0 } }
+          ]
+        },
+        {
+          text: "Q3. 生きていく上で、一番大切にしたいルールは？",
+          choices: [
+            { text: "神が定めた絶対的なルール（戒律）を、日々の生活で厳密に守る", scores: { buddhism: 0, christianity: 0, islam: 2 } },
+            { text: "自分の欲望（煩悩）に振り回されず、心をコントロールして穏やかに生きる", scores: { buddhism: 2, christianity: 0, islam: 0 } },
+            { text: "神の愛を信じ、見返りを求めず他者に「無償の愛」を注ぐ", scores: { buddhism: 0, christianity: 2, islam: 0 } }
+          ]
+        },
+        {
+          text: "Q4. 「貧しい人」や「困っている人」に対して、社会はどうあるべき？",
+          choices: [
+            { text: "神への信仰の証として、貧しい人へ寄付（喜捨）をするのを全員の『義務』にするべき", scores: { buddhism: 0, christianity: 0, islam: 2 } },
+            { text: "すべての生き物の苦しみに共感し、慈悲の心で優しく接するべき", scores: { buddhism: 2, christianity: 0, islam: 0 } },
+            { text: "社会の最も弱い立場にいる人たちこそ、家族のように愛して助け合うべき", scores: { buddhism: 0, christianity: 2, islam: 0 } }
+          ]
+        },
+        {
+          text: "Q5. 人生の最終的な「理想のゴール」はどこにあると思う？",
+          choices: [
+            { text: "神からの愛による救済と、神の国（天国）の実現", scores: { buddhism: 0, christianity: 2, islam: 0 } },
+            { text: "最後の審判の日に善行が認められ、楽園に行くこと", scores: { buddhism: 0, christianity: 0, islam: 2 } },
+            { text: "あらゆる苦しみや迷いから解放された、絶対的な心の平安（悟り・涅槃）", scores: { buddhism: 2, christianity: 0, islam: 0 } }
+          ]
+        }
+      ],
+      results: {
+        buddhism: { name: "仏教", desc: "【苦しみの原因は自分の心にある】\nあなたは仏教の考えに近いかも！自分の欲望をコントロールし、ストイックに悟りを目指す一面があります。四諦（したい）や八正道（はっしょうどう）の教えがしっくりくるはず！" },
+        christianity: { name: "キリスト教", desc: "【愛こそすべて】\nあなたはキリスト教の考えに近いかも！神の愛（アガペー）を信じ、隣人を自分のように愛する温かさを持っています。イエスの「山上の垂訓」などを読んでみると面白いかも！" },
+        islam: { name: "イスラム教", desc: "【絶対的な神への服従】\nあなたはイスラム教の考えに近いかも！神（アッラー）の教えを信じ、生活の中で規律をきっちり守る真面目さを持っています。六信五行（ろくしんごぎょう）のシステムはあなたの性に合っているかも！" }
+      }
     },
-    {
-      text: "人生で一番大切にすべきルールは？",
-      choices: [
-        { text: "神の愛を信じ、他者に無償の愛を注ぐこと", scores: { buddhism: 0, christianity: 2, islam: 0 } },
-        { text: "神が定めた絶対的な戒律（ルール）を日常生活で厳格に守ること", scores: { buddhism: 0, christianity: 0, islam: 2 } },
-        { text: "自分の欲望（煩悩）をコントロールし、心の平穏を保つこと", scores: { buddhism: 2, christianity: 0, islam: 0 } }
-      ]
-    }
-  ];
 
-  // 結果の解説テキスト
-  const results = {
-    buddhism: { name: "仏教", desc: "あなたの思想は「仏教」に近いかも！苦しみの原因は自分の心（煩悩）にあると考え、修行や自己コントロールによって悟りを目指すストイックな一面があります。四法印や八正道などの考え方がしっくりくるはず！" },
-    christianity: { name: "キリスト教", desc: "あなたの思想は「キリスト教」に近いかも！神の愛（アガペー）を信じ、隣人を自分のように愛するという、温かく包み込むような精神を大切にしています。イエスの山上の垂訓などを読んでみると面白いかも！" },
-    islam: { name: "イスラム教", desc: "あなたの思想は「イスラム教」に近いかも！唯一絶対の神（アッラー）に完全な服従を誓い、生活のあらゆる場面でルールをきっちり守る規律正しさを持っています。六信五行のシステムはあなたの性に合っているかも！" }
+    // ========== ２．規範倫理学（5問） ==========
+    normative: {
+      title: "規範倫理学 match",
+      scores: { util: 0, deontology: 0, virtue: 0 },
+      questions: [
+        {
+          text: "Q1. 友達の新しい髪型が、正直すごく変だった時、どうする？",
+          choices: [
+            { text: "正直に「変だ」と言う。「嘘をつかない」というルールは絶対に守るべきだから。", scores: { util: 0, deontology: 2, virtue: 0 } },
+            { text: "「似合ってる！」と嘘をつく。その方が友達が喜んでハッピーになるから。", scores: { util: 2, deontology: 0, virtue: 0 } },
+            { text: "相手を傷つけず、かつ嘘にならない上手い言い方で寄り添う。思いやりのある人間でありたいから。", scores: { util: 0, deontology: 0, virtue: 2 } }
+          ]
+        },
+        {
+          text: "Q2. 「絶対にバレない嘘」をついて、みんながハッピーになるなら、その嘘はついてもいい？",
+          choices: [
+            { text: "みんなが幸せになる（結果が良い）なら、嘘をついてもいい。", scores: { util: 2, deontology: 0, virtue: 0 } },
+            { text: "嘘をつくような「ズルい人間」に自分がなりたくないので、やらない。", scores: { util: 0, deontology: 0, virtue: 2 } },
+            { text: "「嘘をついてはいけない」という義務があるなら、どんな結果になろうと絶対にダメ。", scores: { util: 0, deontology: 2, virtue: 0 } }
+          ]
+        },
+        {
+          text: "Q3. 誰も見ていないのに、落ちているゴミを拾う。その一番の理由は？",
+          choices: [
+            { text: "ゴミを拾うことで、その場を使うみんなが快適になる（全体の幸福が増える）から。", scores: { util: 2, deontology: 0, virtue: 0 } },
+            { text: "ゴミを捨てない・拾うべきだという「正しいルール」に従う義務があるから。", scores: { util: 0, deontology: 2, virtue: 0 } },
+            { text: "ゴミを自然と拾えるような、「立派な性格」の人間でありたいから。", scores: { util: 0, deontology: 0, virtue: 2 } }
+          ]
+        },
+        {
+          text: "Q4. 歴史上の偉人を「本当にすごい人だ！」と評価するポイントは？",
+          choices: [
+            { text: "どんな苦境でも、自分の信念や「正義」を絶対に曲げず貫き通したところ。", scores: { util: 0, deontology: 2, virtue: 0 } },
+            { text: "日常の些細な振る舞いや、その人からにじみ出る「素晴らしい人柄・品性」。", scores: { util: 0, deontology: 0, virtue: 2 } },
+            { text: "最終的にどれだけ多くの人を救い、社会を発展させたかという「結果と業績」。", scores: { util: 2, deontology: 0, virtue: 0 } }
+          ]
+        },
+        {
+          text: "Q5. 結局、「良い行動」って何で決まると思う？",
+          choices: [
+            { text: "社会全体の「幸福の合計」がどれだけ増えたか（結果重視）", scores: { util: 2, deontology: 0, virtue: 0 } },
+            { text: "それが「誰もが守るべき普遍的な義務」であるかどうか（動機・ルール重視）", scores: { util: 0, deontology: 2, virtue: 0 } },
+            { text: "その行動を繰り返すことで、自分自身の「良い性格・品性」が育つかどうか（人柄重視）", scores: { util: 0, deontology: 0, virtue: 2 } }
+          ]
+        }
+      ],
+      results: {
+        util: { name: "功利主義", desc: "【最大多数の最大幸福】\nあなたはベンサムやJ.S.ミルでおなじみ「功利主義」派！プロセスやルールよりも「最終的にどれだけの人を幸せにしたか」という結果を重んじる、合理的でクールな考えの持ち主です。" },
+        deontology: { name: "義務論", desc: "【ルールは絶対！】\nあなたはカントが提唱した「義務論」派！損得や感情に流されず、「人間として守るべき絶対のルール（定言命法）」を自ら課して守ろうとする、非常に気高く真面目な精神の持ち主です。" },
+        virtue: { name: "徳倫理学", desc: "【良い習慣が良い人を作る】\nあなたはアリストテレスらに代表される「徳倫理学」派！「どんなルールを守るか」や「結果」より、「どんな人間になりたいか」を重視し、日々の良い行い（卓越性）の積み重ねを大切にしています。" }
+      }
+    }
   };
 
+  /* --- プログラムを動かす仕組み（JavaScript） --- */
+  let currentCategory = "";
   let currentQuestionIndex = 0;
-  let totalScores = { buddhism: 0, christianity: 0, islam: 0 };
+  let currentScores = {};
 
-  // 質問を表示する関数
-  function showQuestion() {
-    const q = questions[currentQuestionIndex];
-    document.getElementById("question-number").textContent = `Q${currentQuestionIndex + 1} / ${questions.length}`;
-    document.getElementById("question").textContent = q.text;
+  function switchScreen(screenId) {
+    document.getElementById("home-screen").classList.remove("active-screen");
+    document.getElementById("quiz-screen").classList.remove("active-screen");
+    document.getElementById("result-screen").classList.remove("active-screen");
+    document.getElementById(screenId).classList.add("active-screen");
+  }
+
+  function startQuiz(categoryKey) {
+    currentCategory = categoryKey;
+    currentQuestionIndex = 0;
+    currentScores = Object.assign({}, quizData[categoryKey].scores);
     
-    const choicesDiv = document.getElementById("choices");
-    choicesDiv.innerHTML = ""; // 前の選択肢を消す
+    document.getElementById("category-title").textContent = quizData[categoryKey].title;
+    switchScreen("quiz-screen");
+    showQuestion();
+  }
+
+  function showQuestion() {
+    const data = quizData[currentCategory];
+    const q = data.questions[currentQuestionIndex];
+    
+    document.getElementById("question-number").textContent = `Q${currentQuestionIndex + 1} / ${data.questions.length}`;
+    document.getElementById("question-text").textContent = q.text;
+    
+    const choicesDiv = document.getElementById("choices-container");
+    choicesDiv.innerHTML = "";
     
     q.choices.forEach(choice => {
       const btn = document.createElement("button");
+      btn.className = "choice-btn";
       btn.textContent = choice.text;
       btn.onclick = () => selectAnswer(choice.scores);
       choicesDiv.appendChild(btn);
     });
   }
 
-  // 選択肢を選んだ時の処理
   function selectAnswer(scores) {
-    totalScores.buddhism += scores.buddhism;
-    totalScores.christianity += scores.christianity;
-    totalScores.islam += scores.islam;
+    for (const key in scores) {
+      currentScores[key] += scores[key];
+    }
     
     currentQuestionIndex++;
-    if (currentQuestionIndex < questions.length) {
-      showQuestion(); // 次の質問へ
+    if (currentQuestionIndex < quizData[currentCategory].questions.length) {
+      showQuestion();
     } else {
-      showResult(); // 終わったら結果発表へ
+      showResult();
     }
   }
 
-  // 結果を発表する関数
   function showResult() {
-    document.getElementById("quiz").style.display = "none";
-    document.getElementById("result").style.display = "block";
+    switchScreen("result-screen");
     
-    // 一番点数が高いものを探す
     let maxScore = -1;
-    let finalResult = "";
-    for (const [rel, score] of Object.entries(totalScores)) {
+    let finalResultKey = "";
+    for (const [key, score] of Object.entries(currentScores)) {
       if (score > maxScore) {
         maxScore = score;
-        finalResult = rel;
+        finalResultKey = key;
       }
     }
     
-    document.getElementById("result-name").textContent = results[finalResult].name;
-    document.getElementById("result-desc").textContent = results[finalResult].desc;
+    const resultData = quizData[currentCategory].results[finalResultKey];
+    
+    document.getElementById("result-name").textContent = resultData.name;
+    document.getElementById("result-desc").innerHTML = resultData.desc.replace(/\n/g, '<br>');
   }
 
-  // 最初の質問を表示してスタート
-  showQuestion();
+  function goHome() {
+    switchScreen("home-screen");
+  }
 </script>
 
 </body>
