@@ -36,11 +36,15 @@
   }
   .menu-btn:hover { background-color: #3498db; color: white; transform: translateY(-2px);}
   
+  /* 10問カテゴリ用の特別カラー */
+  .special-btn { background-color: #ffeaa7; border: 2px solid #fdcb6e; }
+  .special-btn:hover { background-color: #fdcb6e; color: #2d3436; }
+
   .choice-btn { 
     display: block; width: 100%; padding: 15px; margin: 12px 0; 
-    font-size: 16px; cursor: pointer; border: 2px solid #3498db; 
+    font-size: 15px; cursor: pointer; border: 2px solid #3498db; 
     border-radius: 8px; background-color: white; color: #3498db; 
-    font-weight: bold; transition: 0.2s; text-align: left; line-height: 1.4;
+    font-weight: bold; transition: 0.2s; text-align: left; line-height: 1.5;
   }
   .choice-btn:hover { background-color: #3498db; color: white; }
   
@@ -50,8 +54,8 @@
   #home-screen, #quiz-screen, #result-screen { display: none; }
   .active-screen { display: block !important; }
 
-  .result-title { font-size: 32px; color: #e74c3c; margin: 15px 0; font-weight: bold;}
-  .result-desc { font-size: 16px; line-height: 1.8; text-align: left; background: #fdf2f0; padding: 20px; border-radius: 8px; margin-bottom: 20px;}
+  .result-title { font-size: 28px; color: #e74c3c; margin: 15px 0; font-weight: bold;}
+  .result-desc { font-size: 15px; line-height: 1.8; text-align: left; background: #fdf2f0; padding: 20px; border-radius: 8px; margin-bottom: 20px;}
   .back-btn { background-color: #2c3e50; color: white; border: none; padding: 15px; border-radius: 8px; width: 100%; font-size: 16px; cursor: pointer; font-weight: bold;}
 </style>
 </head>
@@ -63,15 +67,14 @@
     <h1>📚 倫理思想マッチング</h1>
     <p>キミの考え方は、歴史上のどの思想家と同じ？<br>気になるカテゴリを選んで診断しよう！</p>
     
-    <button class="menu-btn" onclick="startQuiz('religion')">１．宗教 match（5問）</button>
-    <button class="menu-btn" onclick="startQuiz('normative')">２．規範倫理学 match（5問）</button>
-    
-    <button class="menu-btn" onclick="alert('現在作成中です！お楽しみに！')" style="opacity: 0.6;">３．古代ギリシャ哲学 match（準備中）</button>
-    <button class="menu-btn" onclick="alert('現在作成中です！お楽しみに！')" style="opacity: 0.6;">４．近代科学 match（準備中）</button>
-    <button class="menu-btn" onclick="alert('現在作成中です！お楽しみに！')" style="opacity: 0.6;">５．社会契約論 match（準備中）</button>
-    <button class="menu-btn" onclick="alert('現在作成中です！お楽しみに！')" style="opacity: 0.6;">６．実存主義・マルクス match（準備中）</button>
-    <button class="menu-btn" onclick="alert('現在作成中です！お楽しみに！')" style="opacity: 0.6;">７．中国思想 match（準備中）</button>
-    <button class="menu-btn" onclick="alert('現在作成中です！お楽しみに！')" style="opacity: 0.6;">８．日本思想 match（準備中）</button>
+    <button class="menu-btn" onclick="startQuiz('religion')">１．宗教 match</button>
+    <button class="menu-btn" onclick="startQuiz('normative')">２．規範倫理学 match</button>
+    <button class="menu-btn" onclick="startQuiz('greek')">３．古代ギリシャ哲学 match</button>
+    <button class="menu-btn" onclick="startQuiz('science')">４．近代科学 match</button>
+    <button class="menu-btn" onclick="startQuiz('democracy')">５．民主社会と自由 match</button>
+    <button class="menu-btn special-btn" onclick="startQuiz('existentialism')">６．人間性の回復 match（10問）</button>
+    <button class="menu-btn special-btn" onclick="startQuiz('chinese')">７．中国思想 match（10問）</button>
+    <button class="menu-btn special-btn" onclick="startQuiz('japanese')">８．日本思想 match（10問）</button>
   </div>
 
   <div id="quiz-screen">
@@ -93,114 +96,296 @@
 <script>
   /* --- データ（質問と結果） --- */
   const quizData = {
-    // ========== １．宗教（5問） ==========
+    // ========== １〜６のデータ（省略せず残しています） ==========
     religion: {
-      title: "宗教 match",
-      scores: { buddhism: 0, christianity: 0, islam: 0 },
+      title: "宗教 match", scores: { buddhism: 0, christianity: 0, islam: 0 },
+      questions: [
+        { text: "Q1. 世界や宇宙は、どうやってできたと思う？", choices: [ { text: "すべては繋がり合って変化している", scores: { buddhism: 2 } }, { text: "神様が世界を美しく創り上げた", scores: { christianity: 2 } }, { text: "唯一の神が全知全能の力で創造した", scores: { islam: 2 } } ] },
+        { text: "Q2. 「ツラいこと」があった時、どう捉える？", choices: [ { text: "神様が与えた試練だ", scores: { christianity: 2 } }, { text: "すべては神様の計画通り（定命）だ", scores: { islam: 2 } }, { text: "自分の執着や煩悩が原因だ", scores: { buddhism: 2 } } ] },
+        { text: "Q3. 一番大切にしたいルールは？", choices: [ { text: "神が定めた戒律を厳密に守る", scores: { islam: 2 } }, { text: "煩悩をコントロールし穏やかに生きる", scores: { buddhism: 2 } }, { text: "見返りを求めず他者に愛を注ぐ", scores: { christianity: 2 } } ] },
+        { text: "Q4. 困っている人に対して、社会はどうあるべき？", choices: [ { text: "寄付（喜捨）を全員の義務にするべき", scores: { islam: 2 } }, { text: "慈悲の心で優しく接するべき", scores: { buddhism: 2 } }, { text: "家族のように愛して助け合うべき", scores: { christianity: 2 } } ] },
+        { text: "Q5. 人生の最終的な「理想のゴール」は？", choices: [ { text: "神からの愛による救済と天国", scores: { christianity: 2 } }, { text: "最後の審判で認められ楽園へ行く", scores: { islam: 2 } }, { text: "苦しみから解放された心の平安（悟り）", scores: { buddhism: 2 } } ] }
+      ],
+      results: { buddhism: { name: "仏教", desc: "ストイックに悟りを目指すタイプ。四諦や八正道がしっくりくる！" }, christianity: { name: "キリスト教", desc: "神の愛を信じ、隣人を愛する温かい心の持ち主です。" }, islam: { name: "イスラム教", desc: "規律をきっちり守る真面目さを持っています。" } }
+    },
+    normative: {
+      title: "規範倫理学 match", scores: { util: 0, deontology: 0, virtue: 0 },
+      questions: [
+        { text: "Q1. 友達の新しい髪型が変だった時、どうする？", choices: [ { text: "正直に言う（嘘は絶対ダメ）", scores: { deontology: 2 } }, { text: "似合ってると嘘をつく（相手が喜ぶから）", scores: { util: 2 } }, { text: "相手を傷つけない言い方で寄り添う", scores: { virtue: 2 } } ] },
+        { text: "Q2. バレない嘘をついてみんながハッピーになるなら？", choices: [ { text: "結果が良いなら嘘をついてもいい", scores: { util: 2 } }, { text: "ズルい人間になりたくないからやらない", scores: { virtue: 2 } }, { text: "嘘はいけないという義務があるからダメ", scores: { deontology: 2 } } ] },
+        { text: "Q3. 誰も見ていないのにゴミを拾う理由は？", choices: [ { text: "みんなが快適になるから", scores: { util: 2 } }, { text: "ゴミを拾うべきという正しいルールだから", scores: { deontology: 2 } }, { text: "立派な性格の人間でありたいから", scores: { virtue: 2 } } ] },
+        { text: "Q4. 歴史上の偉人を評価するポイントは？", choices: [ { text: "信念や正義を貫き通したところ", scores: { deontology: 2 } }, { text: "その人からにじみ出る素晴らしい人柄", scores: { virtue: 2 } }, { text: "どれだけの人を救ったかという結果", scores: { util: 2 } } ] },
+        { text: "Q5. 「良い行動」って何で決まる？", choices: [ { text: "幸福の合計がどれだけ増えたか", scores: { util: 2 } }, { text: "普遍的な義務であるかどうか", scores: { deontology: 2 } }, { text: "良い性格や品性が育つかどうか", scores: { virtue: 2 } } ] }
+      ],
+      results: { util: { name: "功利主義", desc: "結果を重んじる合理的でクールな考えの持ち主です。" }, deontology: { name: "義務論", desc: "絶対のルールを守ろうとする気高い精神の持ち主です。" }, virtue: { name: "徳倫理学", desc: "「どんな人間になりたいか」を重視する人柄重視タイプです。" } }
+    },
+    greek: {
+      title: "古代ギリシャ哲学 match", scores: { socrates: 0, plato: 0, aristotle: 0 },
+      questions: [
+        { text: "Q1. 新しいことを学ぶとき、どんな姿勢になりがち？", choices: [ { text: "自分は何も分かっていないと思い、質問しまくる", scores: { socrates: 2 } }, { text: "「これの完璧な理想形って何だろう？」と妄想する", scores: { plato: 2 } }, { text: "現実のデータを集めて「ちょうどいい結論」を出す", scores: { aristotle: 2 } } ] },
+        { text: "Q2. クラスの話し合いはどう進めるのが理想？", choices: [ { text: "徹底的に対話して意味を深める", scores: { socrates: 2 } }, { text: "一番賢いリーダーがスパッと決めて引っ張る", scores: { plato: 2 } }, { text: "極端な意見を削って、納得できる真ん中を採用する", scores: { aristotle: 2 } } ] },
+        { text: "Q3. 決断するときに一番重視するのは？", choices: [ { text: "人間として胸を張れる選択かどうか（魂への配慮）", scores: { socrates: 2 } }, { text: "妥協のない完璧な理想に近づけるかどうか", scores: { plato: 2 } }, { text: "やりすぎでもやらなすぎでもないベストなバランスか", scores: { aristotle: 2 } } ] },
+        { text: "Q4. 最高の友達ってどんな関係？", choices: [ { text: "間違いを指摘し合い、人間として成長できる関係", scores: { socrates: 2 } }, { text: "純粋で精神的な結びつき", scores: { plato: 2 } }, { text: "長所を引き出し合い、現実の生活を豊かにできる関係", scores: { aristotle: 2 } } ] },
+        { text: "Q5. ズバリ、この世界をどう見ている？", choices: [ { text: "知らないことだらけの、問いがいのある世界", scores: { socrates: 2 } }, { text: "不完全な影の世界。どこかに完璧な本物の世界がある", scores: { plato: 2 } }, { text: "あらゆるものに目的があり、完成を目指している世界", scores: { aristotle: 2 } } ] }
+      ],
+      results: { socrates: { name: "ソクラテス", desc: "知ったかぶりをせず、本質を求めて対話するピュアな探求者です。" }, plato: { name: "プラトン", desc: "常に「完璧な理想」を追い求めるロマンチストです。" }, aristotle: { name: "アリストテレス", desc: "現実を観察して極端を避けたバランス（中庸）を見つけ出す常識人です。" } }
+    },
+    science: {
+      title: "近代科学 match", scores: { bacon: 0, descartes: 0 },
+      questions: [
+        { text: "Q1. 真理を見つけるにはどうする？", choices: [ { text: "事実やデータを集めて共通点を見つける", scores: { bacon: 2 } }, { text: "絶対に疑えないことを一つ見つけ、論理的に推理する", scores: { descartes: 2 } } ] },
+        { text: "Q2. 勉強の「一番の敵」は？", choices: [ { text: "思い込みや世間の常識（偏見）", scores: { bacon: 2 } }, { text: "錯覚を起こしやすい「人間の感覚」", scores: { descartes: 2 } } ] },
+        { text: "Q3. 学問の最大の目的は？", choices: [ { text: "自然のルールを知り、生活を便利にすること", scores: { bacon: 2 } }, { text: "絶対に揺るがない「確実な土台」を築くこと", scores: { descartes: 2 } } ] },
+        { text: "Q4. 難しい問題にぶつかったら？", choices: [ { text: "個別のケースをたくさん観察してリストアップする", scores: { bacon: 2 } }, { text: "一番単純で小さな問題にまで細かく分割する", scores: { descartes: 2 } } ] },
+        { text: "Q5. 自分が「存在している」と確信できる理由は？", choices: [ { text: "色々なものを経験しているという事実があるから", scores: { bacon: 2 } }, { text: "「今、疑い、考えている自分」だけは否定できないから", scores: { descartes: 2 } } ] }
+      ],
+      results: { bacon: { name: "フランシス・ベーコン", desc: "事実を観察して結論を導き出す経験主義者です。" }, descartes: { name: "ルネ・デカルト", desc: "徹底的に疑い、確実な土台から論理を組み立てる理性の持ち主です。" } }
+    },
+    democracy: {
+      title: "民主社会と自由 match", scores: { hobbes: 0, locke: 0, rousseau: 0, kant: 0, hegel: 0, bentham: 0, mill: 0 },
+      questions: [
+        { text: "Q1. もし「法律も警察もない世界」になったら？", choices: [ { text: "自分の利益を優先して「万人の万人に対する闘争」になる", scores: { hobbes: 2 } }, { text: "基本的には平和だが、財産トラブルの時に不便", scores: { locke: 2 } }, { text: "本来は平和だが「私有財産」のせいで争いが生まれる", scores: { rousseau: 2 } }, { text: "歴史的な対立を繰り返しながら理性的な社会へ成長する", scores: { hegel: 2 } } ] },
+        { text: "Q2. ズバリ、「本当の自由」って何？", choices: [ { text: "自分が立てた「正しい道徳ルール」に自ら従うこと", scores: { kant: 2 } }, { text: "他人に迷惑をかけない範囲で、自分の個性を追求すること", scores: { mill: 2 } }, { text: "みんなで話し合って決めた「みんなのためのルール」に従うこと", scores: { rousseau: 2 } }, { text: "社会の中で自分の役割を果たし、共同体と一体になること", scores: { hegel: 2 } } ] },
+        { text: "Q3. 国や政府の「一番の役割」は？", choices: [ { text: "強力な権力でルールを強制し、人々の命と安全を守る", scores: { hobbes: 2 } }, { text: "国民の「生命・自由・財産」を守る（暴走したら抵抗OK）", scores: { locke: 2 } }, { text: "社会全体の「幸福の合計」が最大になるよう計算する", scores: { bentham: 2 } }, { text: "人間を「目的」として尊重し、個人の尊厳を守る", scores: { kant: 2 } } ] },
+        { text: "Q4. 意見が対立したとき、どう解決する？", choices: [ { text: "「快楽と苦痛」を客観的に計算して多数決で決める", scores: { bentham: 2 } }, { text: "少数派も弾圧せず、徹底的な議論によって真理を探る", scores: { mill: 2 } }, { text: "お互いの対立を乗り越えて、より高い次元の結論を生み出す", scores: { hegel: 2 } }, { text: "個人の利益ではなく、共同体全体の共通利益を優先する", scores: { rousseau: 2 } } ] },
+        { text: "Q5. 目指すべき理想の社会は？", choices: [ { text: "強力なリーダーのもとで安心して暮らせる社会", scores: { hobbes: 2 } }, { text: "個人の権利が保障された民主主義社会", scores: { locke: 2 } }, { text: "全員がお互いの人格を尊重し合う「目的の国」", scores: { kant: 2 } }, { text: "最大多数の最大幸福が実現し、みんなが快楽を得られる社会", scores: { bentham: 2 } }, { text: "他人に危害を加えない限り自由が保障され、精神的に成長できる社会", scores: { mill: 2 } } ] }
+      ],
+      results: { hobbes: { name: "トマス・ホッブズ", desc: "平和のためには強力な権力が必要だと考える現実主義者です。" }, locke: { name: "ジョン・ロック", desc: "個人の自由や財産を重んじる、民主主義の基礎を持つ人です。" }, rousseau: { name: "ジャン＝ジャック・ルソー", desc: "「共通の利益（一般意志）」に従うことこそ本当の自由だと考えます。" }, kant: { name: "イマヌエル・カント", desc: "自ら立てた道徳法則に従う「自律」を重んじる気高い精神を持っています。" }, hegel: { name: "G.W.F.ヘーゲル", desc: "対立を乗り越えて成長する「弁証法」的思考を持つスケールの大きな人です。" }, bentham: { name: "ジェレミ・ベンサム", desc: "社会全体の幸福量が最大になるシステムを目指す合理主義者です。" }, mill: { name: "J.S.ミル", desc: "他人に迷惑をかけない限り個人の自由と精神的成長を最大限に尊重します。" } }
+    },
+    existentialism: {
+      title: "人間性の回復 match", scores: { marx: 0, kierkegaard: 0, nietzsche: 0, jaspers: 0, heidegger: 0, sartre: 0 },
+      questions: [
+        { text: "Q1. 人生の「正解」や「生きる意味」ってどこにあると思う？", choices: [ { text: "あらかじめ決まった正解はない。自分が後から作っていくものだ。", scores: { sartre: 2 } }, { text: "「私にとって命を懸けられる真理」こそが大事だ。", scores: { kierkegaard: 2 } }, { text: "意味なんて最初からない。無意味さを笑い飛ばし、力強く生きるべきだ。", scores: { nietzsche: 2 } } ] },
+        { text: "Q2. 今の社会や学校で、一番「嫌だなぁ」と感じるのは？", choices: [ { text: "お金や成績のシステムに人間が振り回され、ただの歯車にされていること。", scores: { marx: 2 } }, { text: "「みんなと同じ」に流され、世間の常識に埋もれて個性が消えてしまうこと。", scores: { heidegger: 2 } }, { text: "人生を自分で決める責任から逃げて、環境や他人のせいにしていること。", scores: { sartre: 1, kierkegaard: 1 } } ] },
+        { text: "Q3. 「死」や「絶望」といった壁（限界状況）にぶつかった時、どうなる？", choices: [ { text: "絶望の底でこそ、自分の本当の存在や「超越者」に出会える。", scores: { jaspers: 2 } }, { text: "「自分はいつか死ぬ」と自覚することで、本来の生き方に目覚める。", scores: { heidegger: 2 } }, { text: "人間の限界を悟り、「神」という絶対的な存在に飛び込む（跳躍する）。", scores: { kierkegaard: 2 } } ] },
+        { text: "Q4. 人間が本当に「自由」であるためには何が必要？", choices: [ { text: "社会の仕組み（経済・環境など）を根本から変え、不平等をなくすこと。", scores: { marx: 2 } }, { text: "どんな状況でも「自分が選んだ」と引き受け、社会の課題に参加すること。", scores: { sartre: 2 } }, { text: "過去の古い道徳に縛られず、自分の価値観を自分で創り出すこと。", scores: { nietzsche: 2 } } ] },
+        { text: "Q5. 「あなたの人生、全く同じことを永遠に繰り返しなさい」と言われたら？", choices: [ { text: "「望むところだ！」と笑って受け入れられるような、強い自分になりたい。", scores: { nietzsche: 2 } }, { text: "永遠の繰り返しだとしても、その一瞬一瞬を「私が選んだ」と胸を張りたい。", scores: { sartre: 2 } }, { text: "「死」という終わりがあるからこそ今が大事なのであって、永遠なんて考えたくない。", scores: { heidegger: 2 } } ] },
+        { text: "Q6. 「いい人」とか「道徳的」って言われることについて、どう思う？", choices: [ { text: "実はそれ、強い者に対する「ひがみ」から生まれた弱い者のルールだと思う。", scores: { nietzsche: 2 } }, { text: "世間の道徳を守るだけではダメ。最後は「たった一人の私」として絶対者に向き合うべきだ。", scores: { kierkegaard: 2 } }, { text: "表面的な道徳より、他者と「本当の心」で響き合うコミュニケーションができた時が一番大切だ。", scores: { jaspers: 2 } } ] },
+        { text: "Q7. 歴史や社会を変えていく「原動力」って何だと思う？", choices: [ { text: "人間同士の利害の対立や、経済的な格差（階級闘争）が社会を動かしてきた。", scores: { marx: 2 } }, { text: "一人ひとりが「自由な主体」として、社会問題に本気で関わっていく行動。", scores: { sartre: 2 } }, { text: "困難な壁を乗り越えようとする個人の深い目覚めと、他者との連帯。", scores: { jaspers: 1, marx: 1 } } ] },
+        { text: "Q8. 深い孤独や不安を感じたとき、どうやって立ち直る？", choices: [ { text: "ごまかさず不安と向き合い、世間のノイズから離れた「本来の自分」を取り戻す。", scores: { heidegger: 2 } }, { text: "自分と同じように傷つき、悩む他者と、心の底から包み隠さず語り合う。", scores: { jaspers: 2 } }, { text: "不安とは「何にでもなれる自由の証拠」だと割り切り、新しい行動を起こす。", scores: { sartre: 2 } } ] },
+        { text: "Q9. 「人間」という存在を一言で表すなら？", choices: [ { text: "労働を通して自然に働きかけ、自分たちの世界を創り出す存在。", scores: { marx: 2 } }, { text: "この世界に理由もなくポンと「投げ出された」存在。", scores: { heidegger: 2 } }, { text: "自分の「本質」が白紙のまま存在し、自分で自分を描いていく存在。", scores: { sartre: 2 } } ] },
+        { text: "Q10. 最終的に、あなたが目指したい「理想の人物像」は？", choices: [ { text: "古い価値観を壊し、新しい価値を生み出し運命を愛する人。", scores: { nietzsche: 2 } }, { text: "世間の群れから離れ、孤独の中でたった一人で絶対者と向き合う人。", scores: { kierkegaard: 2 } }, { text: "自分の人生を選び取り、同時に全人類の未来にも責任を持てる自由な人。", scores: { sartre: 2 } }, { text: "絶望的な壁にぶつかっても、他者との真の交わりの中で自分に目覚める人。", scores: { jaspers: 2 } }, { text: "自分が「死ぬべき存在」だと自覚し、世間話に逃げず本来の自分を生きる人。", scores: { heidegger: 2 } }, { text: "労働の喜びを取り戻し、不平等のない社会を実現するために仲間と連帯する人。", scores: { marx: 2 } } ] }
+      ],
+      results: { marx: { name: "カール・マルクス", desc: "【疎外からの解放】理不尽な社会システムを見抜き、より良い社会を創ろうとする熱い連帯の心を持っています。" }, kierkegaard: { name: "セーレン・キルケゴール", desc: "【単独者】世間の流行に流されず、「自分にとっての真理」を孤独に追い求めるピュアな精神の持ち主です。" }, nietzsche: { name: "フリードリヒ・ニーチェ", desc: "【超人】世の中の当たり前を疑い、無意味な人生でも「望むところだ！」と笑い飛ばす圧倒的な強さを持っています。" }, jaspers: { name: "カール・ヤスパース", desc: "【実存交わり】挫折を恐れず、同じように悩む他者と心を開いて深く語り合うことで本当の自分に目覚める人です。" }, heidegger: { name: "マルティン・ハイデッガー", desc: "【死へとかかわる存在】死から目を背けず、世間の噂話に流されることなく「自分だけの本来の人生」を真剣に生きる人です。" }, sartre: { name: "ジャン＝ポール・サルトル", desc: "【アンガージュマン】絶対的な自由の重さを引き受け、言い訳せずに自分の行動を選び取り、社会に関わっていく行動派です。" } }
+    },
+
+    // ========== ７．中国思想（10問） ==========
+    chinese: {
+      title: "中国思想 match",
+      scores: { confucius: 0, mencius: 0, xunzi: 0, zhuxi: 0, wangyangming: 0, laozi: 0, zhuangzi: 0, hanfeizi: 0, mozi: 0, sunzi: 0 },
       questions: [
         {
-          text: "Q1. 世界や宇宙は、どうやってできたと思う？",
+          text: "Q1. 人間の「生まれ持っての性質」って、ぶっちゃけどうだと思う？",
           choices: [
-            { text: "すべては繋がり合って、絶えず変化しながら存在している", scores: { buddhism: 2, christianity: 0, islam: 0 } },
-            { text: "人間を深く愛する神様が、世界を美しく創り上げた", scores: { buddhism: 0, christianity: 2, islam: 0 } },
-            { text: "偉大で絶対的な唯一の神が、全知全能の力で創造した", scores: { buddhism: 0, christianity: 0, islam: 2 } }
+            { text: "生まれながらに「思いやり」などの善の心を持っている。", scores: { mencius: 2 } },
+            { text: "放っておいたら欲望のままに悪へと流れてしまう。", scores: { xunzi: 2, hanfeizi: 2 } },
+            { text: "善とか悪とか言う以前に、ありのままの自然な状態が一番良い。", scores: { laozi: 2, zhuangzi: 2 } }
           ]
         },
         {
-          text: "Q2. 人生で一番「ツラいこと・苦しいこと」があった時、どう捉える？",
+          text: "Q2. クラスや社会の平和を保つには何が一番必要？",
           choices: [
-            { text: "「神様が与えた試練だ」と捉え、乗り越えられると信じて祈る", scores: { buddhism: 0, christianity: 2, islam: 0 } },
-            { text: "「すべては神様の計画通り（定命）」と受け入れ、運命に従う", scores: { buddhism: 0, christianity: 0, islam: 2 } },
-            { text: "「自分の過度な欲求や執着が原因だ」と考え、心を見つめ直す", scores: { buddhism: 2, christianity: 0, islam: 0 } }
+            { text: "家族や身近な人への思いやり（仁）と、伝統的な礼儀作法。", scores: { confucius: 2, mencius: 1 } },
+            { text: "自分と他人の区別なく、世界中のすべての人を平等に愛すること。", scores: { mozi: 2 } },
+            { text: "厳格なルール（法）と、ハッキリとしたアメとムチ（賞罰）。", scores: { hanfeizi: 2 } }
           ]
         },
         {
-          text: "Q3. 生きていく上で、一番大切にしたいルールは？",
+          text: "Q3. リーダー（上に立つ人）に一番求められる資質は？",
           choices: [
-            { text: "神が定めた絶対的なルール（戒律）を、日々の生活で厳密に守る", scores: { buddhism: 0, christianity: 0, islam: 2 } },
-            { text: "自分の欲望（煩悩）に振り回されず、心をコントロールして穏やかに生きる", scores: { buddhism: 2, christianity: 0, islam: 0 } },
-            { text: "神の愛を信じ、見返りを求めず他者に「無償の愛」を注ぐ", scores: { buddhism: 0, christianity: 2, islam: 0 } }
+            { text: "みんなから尊敬され、慕われるような素晴らしい「人徳」。", scores: { confucius: 2, mencius: 2 } },
+            { text: "個人的な感情に流されず、システムで人々を管理する冷徹さ。", scores: { hanfeizi: 2, sunzi: 1 } },
+            { text: "「何もしない」こと。余計な口出しをしないのが最高のリーダー。", scores: { laozi: 2 } }
           ]
         },
         {
-          text: "Q4. 「貧しい人」や「困っている人」に対して、社会はどうあるべき？",
+          text: "Q4. 困難な勝負や争いごとに直面した時、どうする？",
           choices: [
-            { text: "神への信仰の証として、貧しい人へ寄付（喜捨）をするのを全員の『義務』にするべき", scores: { buddhism: 0, christianity: 0, islam: 2 } },
-            { text: "すべての生き物の苦しみに共感し、慈悲の心で優しく接するべき", scores: { buddhism: 2, christianity: 0, islam: 0 } },
-            { text: "社会の最も弱い立場にいる人たちこそ、家族のように愛して助け合うべき", scores: { buddhism: 0, christianity: 2, islam: 0 } }
+            { text: "争いは最大の悪！絶対に防衛し、平和と命を守り抜く。", scores: { mozi: 2 } },
+            { text: "敵と味方の状況を冷静に分析し、できれば戦わずして勝つ戦略を練る。", scores: { sunzi: 2 } },
+            { text: "「勝ち負けなんて相対的なものだ」と考え、一切こだわらない。", scores: { zhuangzi: 2 } }
           ]
         },
         {
-          text: "Q5. 人生の最終的な「理想のゴール」はどこにあると思う？",
+          text: "Q5. 「学び」や「知識」について、どう思う？",
           choices: [
-            { text: "神からの愛による救済と、神の国（天国）の実現", scores: { buddhism: 0, christianity: 2, islam: 0 } },
-            { text: "最後の審判の日に善行が認められ、楽園に行くこと", scores: { buddhism: 0, christianity: 0, islam: 2 } },
-            { text: "あらゆる苦しみや迷いから解放された、絶対的な心の平安（悟り・涅槃）", scores: { buddhism: 2, christianity: 0, islam: 0 } }
+            { text: "古典をしっかり読み込み、宇宙の法則（理）を厳密に究めるべきだ。", scores: { zhuxi: 2 } },
+            { text: "知識を得るだけでなく、即座に行動に移さなきゃ意味がない。", scores: { wangyangming: 2 } },
+            { text: "人為的な知識は人をダメにする。小ざかしい知恵は捨てるべきだ。", scores: { laozi: 2, zhuangzi: 1 } }
+          ]
+        },
+        {
+          text: "Q6. 「正しいこと」の基準って何？",
+          choices: [
+            { text: "昔の立派な人たちが作った、素晴らしい伝統や作法（礼）。", scores: { xunzi: 2, confucius: 1 } },
+            { text: "自分の心の中にある「生まれつきの善悪を判断する力（良知）」。", scores: { wangyangming: 2 } },
+            { text: "その時の状況による。絶対的な正しさなんて存在しない。", scores: { zhuangzi: 2 } }
+          ]
+        },
+        {
+          text: "Q7. 宇宙や世界の根本にあるものって何だと思う？",
+          choices: [
+            { text: "目に見えない「理（法則）」と、形を作る「気（エネルギー）」。", scores: { zhuxi: 2 } },
+            { text: "言葉では言い表せない、万物を生み出す神秘的な働き（道・タオ）。", scores: { laozi: 2 } },
+            { text: "天の意思。天が正しいリーダーを選び、悪を滅ぼす。", scores: { mozi: 1, mencius: 1 } }
+          ]
+        },
+        {
+          text: "Q8. どうすれば人は立派になれる？",
+          choices: [
+            { text: "自分の心を深く見つめ、心を曇らせる欲を取り除くこと。", scores: { wangyangming: 2, mencius: 1 } },
+            { text: "厳しいルールや学びによって、後天的に自分を矯正すること。", scores: { xunzi: 2 } },
+            { text: "立派になろうとするから疲れる。ありのままでいい。", scores: { zhuangzi: 2, laozi: 1 } }
+          ]
+        },
+        {
+          text: "Q9. 理想の社会のスケール（規模）は？",
+          choices: [
+            { text: "大きな国で、道徳に溢れた立派な王が治める天下。", scores: { mencius: 2 } },
+            { text: "隣の国の鶏の鳴き声が聞こえるくらいの、小さくて素朴な村（小国寡民）。", scores: { laozi: 2 } },
+            { text: "法律とシステムが完璧に整備され、富国強兵が達成された強い国。", scores: { hanfeizi: 2, sunzi: 2 } }
+          ]
+        },
+        {
+          text: "Q10. 最終的にあなたが目指す境地は？",
+          choices: [
+            { text: "思いやりと礼儀を完成させた、立派な君子。", scores: { confucius: 2, xunzi: 1 } },
+            { text: "宇宙の真理を理解し、正しい行いができる聖人。", scores: { zhuxi: 2 } },
+            { text: "全ての偏見から自由になり、自然と一体化して遊ぶ絶対自由の境地。", scores: { zhuangzi: 2 } },
+            { text: "誰にも騙されず、冷徹に現実を生き抜く勝者。", scores: { hanfeizi: 1, sunzi: 2 } },
+            { text: "私心を捨て、世界中の平和のために身を捧げる実践者。", scores: { mozi: 2 } }
           ]
         }
       ],
       results: {
-        buddhism: { name: "仏教", desc: "【苦しみの原因は自分の心にある】\nあなたは仏教の考えに近いかも！自分の欲望をコントロールし、ストイックに悟りを目指す一面があります。四諦（したい）や八正道（はっしょうどう）の教えがしっくりくるはず！" },
-        christianity: { name: "キリスト教", desc: "【愛こそすべて】\nあなたはキリスト教の考えに近いかも！神の愛（アガペー）を信じ、隣人を自分のように愛する温かさを持っています。イエスの「山上の垂訓」などを読んでみると面白いかも！" },
-        islam: { name: "イスラム教", desc: "【絶対的な神への服従】\nあなたはイスラム教の考えに近いかも！神（アッラー）の教えを信じ、生活の中で規律をきっちり守る真面目さを持っています。六信五行（ろくしんごぎょう）のシステムはあなたの性に合っているかも！" }
+        confucius: { name: "孔子", desc: "【仁・礼】思いやりと礼儀を重んじる、道徳的で立派なリーダー気質です。" },
+        mencius: { name: "孟子", desc: "【性善説・王道政治】人間の善の心を信じ、理想の社会を熱く語るロマンチストです。" },
+        xunzi: { name: "荀子", desc: "【性悪説・礼治】人間は放っておけば悪になると考え、ルール（礼）で正そうとする現実主義者です。" },
+        zhuxi: { name: "朱子", desc: "【理気二元論・居敬窮理】宇宙の法則をストイックに学び、自分を律する超・真面目な学者タイプです。" },
+        wangyangming: { name: "王陽明", desc: "【知行合一・致良知】知識と行動を一致させ、自分の心（良心）に従って素早く動く実践家です。" },
+        laozi: { name: "老子", desc: "【無為自然・柔弱謙下】無駄な競争を嫌い、水のように自然体で生きるスケールの大きな自由人です。" },
+        zhuangzi: { name: "荘子", desc: "【万物斉同・逍遥遊】「正しい」「間違い」といった世間の価値観から完全に抜け出した、究極の自由人です。" },
+        hanfeizi: { name: "韓非子", desc: "【法治主義】感情や道徳を過信せず、冷徹なルールとシステムで組織を動かす有能な策士です。" },
+        mozi: { name: "墨子", desc: "【兼愛・非攻】差別なく全員を愛し、絶対に戦争をしない（でも防衛は最強）という熱い平和主義者です。" },
+        sunzi: { name: "孫子", desc: "【兵法】戦わずして勝つ方法を考え、状況を冷静に分析して生き残る究極のストラテジストです。" }
       }
     },
 
-    // ========== ２．規範倫理学（5問） ==========
-    normative: {
-      title: "規範倫理学 match",
-      scores: { util: 0, deontology: 0, virtue: 0 },
+    // ========== ８．日本思想（10問） ==========
+    japanese: {
+      title: "日本思想 match",
+      scores: { saicho: 0, kukai: 0, honen: 0, shinran: 0, dogen: 0, nichiren: 0, razan: 0, toju: 0, jinsai: 0, sorai: 0, mabuchi: 0, norinaga: 0, shozan: 0, fukuzawa: 0, uchimura: 0, soseki: 0, nishida: 0, watsuji: 0, yanagita: 0 },
       questions: [
         {
-          text: "Q1. 友達の新しい髪型が、正直すごく変だった時、どうする？",
+          text: "Q1. 人生で一番大切にすべきことは？",
           choices: [
-            { text: "正直に「変だ」と言う。「嘘をつかない」というルールは絶対に守るべきだから。", scores: { util: 0, deontology: 2, virtue: 0 } },
-            { text: "「似合ってる！」と嘘をつく。その方が友達が喜んでハッピーになるから。", scores: { util: 2, deontology: 0, virtue: 0 } },
-            { text: "相手を傷つけず、かつ嘘にならない上手い言い方で寄り添う。思いやりのある人間でありたいから。", scores: { util: 0, deontology: 0, virtue: 2 } }
+            { text: "難しいことは考えず、ひたすら仏を信じて祈りや念仏を唱えること。", scores: { honen: 2, shinran: 2, nichiren: 2 } },
+            { text: "厳しい修行や座禅を通して、自分自身を研ぎ澄まし鍛え上げること。", scores: { saicho: 1, kukai: 1, dogen: 2 } },
+            { text: "学問を深め、日常生活の中で人としての正しい道（道徳）を歩むこと。", scores: { razan: 1, toju: 2, jinsai: 2, sorai: 1 } },
+            { text: "理屈よりも、ありのままの素直な感情や豊かな感性を大切にすること。", scores: { mabuchi: 2, norinaga: 2 } }
           ]
         },
         {
-          text: "Q2. 「絶対にバレない嘘」をついて、みんながハッピーになるなら、その嘘はついてもいい？",
+          text: "Q2. 外国の文化や新しい考え方が入ってきた時、どうする？",
           choices: [
-            { text: "みんなが幸せになる（結果が良い）なら、嘘をついてもいい。", scores: { util: 2, deontology: 0, virtue: 0 } },
-            { text: "嘘をつくような「ズルい人間」に自分がなりたくないので、やらない。", scores: { util: 0, deontology: 0, virtue: 2 } },
-            { text: "「嘘をついてはいけない」という義務があるなら、どんな結果になろうと絶対にダメ。", scores: { util: 0, deontology: 2, virtue: 0 } }
+            { text: "最新の技術や知識は取り入れつつ、日本人の魂（道徳）は絶対に守る。", scores: { shozan: 2 } },
+            { text: "古い伝統は捨てて、完全に合理的・科学的に独立するべきだ。", scores: { fukuzawa: 2 } },
+            { text: "外国の思想（仏教や儒教など）の本来の深い意味を徹底的に研究して極める。", scores: { kukai: 1, dogen: 1, sorai: 1 } },
+            { text: "外国の理屈っぽい考え方は捨てて、日本古来の純粋な心に戻るべきだ。", scores: { norinaga: 2, mabuchi: 1 } }
           ]
         },
         {
-          text: "Q3. 誰も見ていないのに、落ちているゴミを拾う。その一番の理由は？",
+          text: "Q3. 自分の「弱さ」や「罪深さ」を感じた時、どう思う？",
           choices: [
-            { text: "ゴミを拾うことで、その場を使うみんなが快適になる（全体の幸福が増える）から。", scores: { util: 2, deontology: 0, virtue: 0 } },
-            { text: "ゴミを捨てない・拾うべきだという「正しいルール」に従う義務があるから。", scores: { util: 0, deontology: 2, virtue: 0 } },
-            { text: "ゴミを自然と拾えるような、「立派な性格」の人間でありたいから。", scores: { util: 0, deontology: 0, virtue: 2 } }
+            { text: "「自分はダメな人間だ」と自覚するからこそ、仏様は救ってくれるんだと信じる。", scores: { shinran: 2 } },
+            { text: "自分の心の奥底には、必ず光り輝く良心（良知）があると信じる。", scores: { toju: 2 } },
+            { text: "絶対的な神の前に一人で立ち、自分の罪を懺悔して祈る。", scores: { uchimura: 2 } }
           ]
         },
         {
-          text: "Q4. 歴史上の偉人を「本当にすごい人だ！」と評価するポイントは？",
+          text: "Q4. 社会のルールや政治について、どう考える？",
           choices: [
-            { text: "どんな苦境でも、自分の信念や「正義」を絶対に曲げず貫き通したところ。", scores: { util: 0, deontology: 2, virtue: 0 } },
-            { text: "日常の些細な振る舞いや、その人からにじみ出る「素晴らしい人柄・品性」。", scores: { util: 0, deontology: 0, virtue: 2 } },
-            { text: "最終的にどれだけ多くの人を救い、社会を発展させたかという「結果と業績」。", scores: { util: 2, deontology: 0, virtue: 0 } }
+            { text: "身分や上下関係をしっかり守り、社会の秩序を保つことが一番大事だ。", scores: { razan: 2 } },
+            { text: "個人の道徳よりも、国を治めるための「客観的な制度や法律」を整えるべきだ。", scores: { sorai: 2 } },
+            { text: "国の権力よりも、個人の自由や独立の方がはるかに重要だ。", scores: { fukuzawa: 2, soseki: 1 } },
+            { text: "政治の歴史よりも、普通の人々（常民）の素朴な暮らしや伝統を大切にしたい。", scores: { yanagita: 2 } }
           ]
         },
         {
-          text: "Q5. 結局、「良い行動」って何で決まると思う？",
+          text: "Q5. 人と人との関係（人間関係）で一番大事なのは？",
           choices: [
-            { text: "社会全体の「幸福の合計」がどれだけ増えたか（結果重視）", scores: { util: 2, deontology: 0, virtue: 0 } },
-            { text: "それが「誰もが守るべき普遍的な義務」であるかどうか（動機・ルール重視）", scores: { util: 0, deontology: 2, virtue: 0 } },
-            { text: "その行動を繰り返すことで、自分自身の「良い性格・品性」が育つかどうか（人柄重視）", scores: { util: 0, deontology: 0, virtue: 2 } }
+            { text: "ウソのない真心（誠）と、相手を思いやる愛（仁）。", scores: { jinsai: 2, toju: 1 } },
+            { text: "人間は一人では生きられない。風土や社会の中での「間柄（関係性）」こそが本質だ。", scores: { watsuji: 2 } },
+            { text: "自己中心的な考え（エゴイズム）を捨てて、自然の大きな流れに身を任せること。", scores: { soseki: 2 } }
+          ]
+        },
+        {
+          text: "Q6. 「本当の学び（学問）」って何だろう？",
+          choices: [
+            { text: "生活を豊かにし、一人ひとりが自立するための実践的な学問（実学）。", scores: { fukuzawa: 2 } },
+            { text: "主観と客観が分かれる前の、「純粋な経験」を哲学的に深く探求すること。", scores: { nishida: 2 } },
+            { text: "文字に書かれた歴史よりも、名もなき人々の伝承や生活の道具から学ぶこと。", scores: { yanagita: 2 } }
+          ]
+        },
+        {
+          text: "Q7. もし自分が生きる社会が腐敗していたら？",
+          choices: [
+            { text: "どんなに迫害されても、自分が信じる正しい教えを激しく主張し、国を正す。", scores: { nichiren: 2 } },
+            { text: "山の奥や静かな場所へこもり、ただひたすらに座禅を組んで真理を追求する。", scores: { dogen: 2 } },
+            { text: "キリスト教の愛と日本の精神をもって、組織（教会）に頼らず闘う。", scores: { uchimura: 2 } }
+          ]
+        },
+        {
+          text: "Q8. 「日本らしさ」って何だと思う？",
+          choices: [
+            { text: "万葉集のような、男らしくて力強い、まっすぐな感情（ますらおぶり）。", scores: { mabuchi: 2 } },
+            { text: "源氏物語のような、繊細でしみじみとした、もののあはれを理解する心（たをやめぶり）。", scores: { norinaga: 2 } },
+            { text: "四季折々の自然（モンスーン気候）の中で培われた、人との繋がりを大事にする気質。", scores: { watsuji: 2 } }
+          ]
+        },
+        {
+          text: "Q9. この世界や宇宙の真理についてどう思う？",
+          choices: [
+            { text: "すべての生き物（草や木も）には、悟りを開ける性質（仏性）がある。", scores: { saicho: 2 } },
+            { text: "この現実の体や世界のままで、そのまま絶対的な真理と一体になれる。", scores: { kukai: 2 } },
+            { text: "「私」と「世界」は別々ではなく、根源的な一つの経験から成り立っている。", scores: { nishida: 2 } }
+          ]
+        },
+        {
+          text: "Q10. あなたの最終的な理想の生き方は？",
+          choices: [
+            { text: "個人の自由を大切にしつつも、天の心に従ってエゴを捨てる（則天去私）。", scores: { soseki: 2 } },
+            { text: "学問で自分を磨き、親孝行をして、誠実に生きる知識人。", scores: { jinsai: 1, razan: 1, toju: 1 } },
+            { text: "ただひたすら信仰にすがり、この世の苦しみから救済されること。", scores: { honen: 2, shinran: 1 } },
+            { text: "日本の伝統や普通の人々の暮らしを愛し、次世代に記録を残すこと。", scores: { yanagita: 2 } }
           ]
         }
       ],
       results: {
-        util: { name: "功利主義", desc: "【最大多数の最大幸福】\nあなたはベンサムやJ.S.ミルでおなじみ「功利主義」派！プロセスやルールよりも「最終的にどれだけの人を幸せにしたか」という結果を重んじる、合理的でクールな考えの持ち主です。" },
-        deontology: { name: "義務論", desc: "【ルールは絶対！】\nあなたはカントが提唱した「義務論」派！損得や感情に流されず、「人間として守るべき絶対のルール（定言命法）」を自ら課して守ろうとする、非常に気高く真面目な精神の持ち主です。" },
-        virtue: { name: "徳倫理学", desc: "【良い習慣が良い人を作る】\nあなたはアリストテレスらに代表される「徳倫理学」派！「どんなルールを守るか」や「結果」より、「どんな人間になりたいか」を重視し、日々の良い行い（卓越性）の積み重ねを大切にしています。" }
+        saicho: { name: "最澄", desc: "【一切衆生悉有仏性】すべての生き物が救われると信じる、真面目でストイックなエリート僧侶です。" },
+        kukai: { name: "空海", desc: "【即身成仏】この身のままで真理と一体化できると考える、スケールの大きな天才クリエイターです。" },
+        honen: { name: "法然", desc: "【専修念仏】難しい理屈を捨て、ひたすら信じる心を持つピュアな信仰者です。" },
+        shinran: { name: "親鸞", desc: "【悪人正機】自分の弱さを知っている人間こそが救われると考える、深い洞察力の持ち主です。" },
+        dogen: { name: "道元", desc: "【只管打坐】余計なことを考えず、ひたすら座る（行動する）妥協なき実践者です。" },
+        nichiren: { name: "日蓮", desc: "【立正安国】間違った社会には絶対に妥協しない、熱血でブレない革命家です。" },
+        razan: { name: "林羅山", desc: "【上下定分の理】ルールや身分秩序を重んじる、超・真面目な優等生です。" },
+        toju: { name: "中江藤樹", desc: "【孝・良知】親への愛と自分の良心を何より大切にする、近江聖人のような温かい人です。" },
+        jinsai: { name: "伊藤仁斎", desc: "【誠・仁愛】ウソのない真心で他者と接する、人間味あふれるヒューマニストです。" },
+        sorai: { name: "荻生徂徠", desc: "【経世済民】個人の道徳より「社会のシステム・法律」を重視するドライな政治家です。" },
+        mabuchi: { name: "賀茂真淵", desc: "【ますらおぶり】男らしく力強い、古き良き日本のまっすぐな心を持つ人です。" },
+        norinaga: { name: "本居宣長", desc: "【もののあはれ】物事の深い感情に共感できる、繊細で豊かな感性の持ち主です。" },
+        shozan: { name: "佐久間象山", desc: "【東洋道徳、西洋芸術】日本の心と海外の技術の「いいとこ取り」ができるハイブリッドな人です。" },
+        fukuzawa: { name: "福沢諭吉", desc: "【独立自尊】誰にも頼らず、自分の頭で考えて行動する自立した近代人です。" },
+        uchimura: { name: "内村鑑三", desc: "【二つのJ・無教会】組織に縛られず、神と日本への愛を貫く誇り高きクリスチャンです。" },
+        soseki: { name: "夏目漱石", desc: "【自己本位・則天去私】個人の自由とエゴイズムに悩みながら、自然に身を任せる境地を目指す文豪です。" },
+        nishida: { name: "西田幾多郎", desc: "【純粋経験】主観や客観といった枠組みを超える、スケールの大きな深い哲学者です。" },
+        watsuji: { name: "和辻哲郎", desc: "【風土・間柄の存在】人間は一人ではなく、社会や風土との繋がりの中で生きると考えるバランス派です。" },
+        yanagita: { name: "柳田国男", desc: "【常民】政治の表舞台よりも、普通の人々の暮らしや伝承を愛する民俗学者です。" }
       }
     }
   };
 
-  /* --- プログラムを動かす仕組み（JavaScript） --- */
+  /* --- プログラムを動かす仕組み --- */
   let currentCategory = "";
   let currentQuestionIndex = 0;
   let currentScores = {};
@@ -215,7 +400,10 @@
   function startQuiz(categoryKey) {
     currentCategory = categoryKey;
     currentQuestionIndex = 0;
-    currentScores = Object.assign({}, quizData[categoryKey].scores);
+    currentScores = {};
+    for(let key in quizData[categoryKey].scores) {
+        currentScores[key] = 0;
+    }
     
     document.getElementById("category-title").textContent = quizData[categoryKey].title;
     switchScreen("quiz-screen");
@@ -243,7 +431,9 @@
 
   function selectAnswer(scores) {
     for (const key in scores) {
-      currentScores[key] += scores[key];
+      if(currentScores[key] !== undefined) {
+        currentScores[key] += scores[key];
+      }
     }
     
     currentQuestionIndex++;
