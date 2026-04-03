@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>倫理マッチング - 宗教編</title>
+<style>
+  /* ここはデザイン（CSS）です */
+  body { 
+    font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif; 
+    background-color: #f4f7f6; 
+    color: #333;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .container { 
+    background: white; 
+    width: 100%;
+    max-width: 500px; 
+    padding: 30px; 
+    border-radius: 12px; 
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1); 
+    text-align: center;
+  }
+  h1 { font-size: 22px; color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px;}
+  #question { font-size: 18px; margin: 20px 0; font-weight: bold; }
+  button { 
+    display: block; 
+    width: 100%; 
+    padding: 15px; 
+    margin: 12px 0; 
+    font-size: 16px; 
+    cursor: pointer; 
+    border: 2px solid #3498db; 
+    border-radius: 8px; 
+    background-color: white; 
+    color: #3498db; 
+    transition: 0.2s; 
+    font-weight: bold;
+  }
+  button:hover { background-color: #3498db; color: white; }
+  #result { display: none; } /* 最初は結果を隠しておく */
+  .result-title { font-size: 28px; color: #e74c3c; margin: 15px 0; }
+  .result-desc { font-size: 16px; line-height: 1.6; text-align: left; background: #fdf2f0; padding: 15px; border-radius: 8px;}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🌍 倫理思想マッチング（宗教編）</h1>
+  
+  <div id="quiz">
+    <p id="question-number" style="color: #7f8c8d; font-size: 14px;"></p>
+    <div id="question">質問がここに出ます</div>
+    <div id="choices"></div>
+  </div>
+
+  <div id="result">
+    <h2>あなたにピッタリの思想は…</h2>
+    <div class="result-title" id="result-name"></div>
+    <div class="result-desc" id="result-desc"></div>
+    <button onclick="location.reload()" style="background-color: #2c3e50; color: white; border-color: #2c3e50; margin-top: 20px;">最初からやり直す</button>
+  </div>
+</div>
+
+<script>
+  /* ここから裏側の仕組み（JavaScript）です */
+  
+  // 質問と、選んだ時にどの宗教に何点入るかの設定
+  const questions = [
+    {
+      text: "この世界の成り立ちについて、どう思う？",
+      choices: [
+        { text: "絶対的な神が世界を創造したと思う", scores: { buddhism: 0, christianity: 1, islam: 1 } },
+        { text: "神が創ったというより、あらゆるものは繋がり変化し続けている", scores: { buddhism: 2, christianity: 0, islam: 0 } }
+      ]
+    },
+    {
+      text: "人生で一番大切にすべきルールは？",
+      choices: [
+        { text: "神の愛を信じ、他者に無償の愛を注ぐこと", scores: { buddhism: 0, christianity: 2, islam: 0 } },
+        { text: "神が定めた絶対的な戒律（ルール）を日常生活で厳格に守ること", scores: { buddhism: 0, christianity: 0, islam: 2 } },
+        { text: "自分の欲望（煩悩）をコントロールし、心の平穏を保つこと", scores: { buddhism: 2, christianity: 0, islam: 0 } }
+      ]
+    }
+  ];
+
+  // 結果の解説テキスト
+  const results = {
+    buddhism: { name: "仏教", desc: "あなたの思想は「仏教」に近いかも！苦しみの原因は自分の心（煩悩）にあると考え、修行や自己コントロールによって悟りを目指すストイックな一面があります。四法印や八正道などの考え方がしっくりくるはず！" },
+    christianity: { name: "キリスト教", desc: "あなたの思想は「キリスト教」に近いかも！神の愛（アガペー）を信じ、隣人を自分のように愛するという、温かく包み込むような精神を大切にしています。イエスの山上の垂訓などを読んでみると面白いかも！" },
+    islam: { name: "イスラム教", desc: "あなたの思想は「イスラム教」に近いかも！唯一絶対の神（アッラー）に完全な服従を誓い、生活のあらゆる場面でルールをきっちり守る規律正しさを持っています。六信五行のシステムはあなたの性に合っているかも！" }
+  };
+
+  let currentQuestionIndex = 0;
+  let totalScores = { buddhism: 0, christianity: 0, islam: 0 };
+
+  // 質問を表示する関数
+  function showQuestion() {
+    const q = questions[currentQuestionIndex];
+    document.getElementById("question-number").textContent = `Q${currentQuestionIndex + 1} / ${questions.length}`;
+    document.getElementById("question").textContent = q.text;
+    
+    const choicesDiv = document.getElementById("choices");
+    choicesDiv.innerHTML = ""; // 前の選択肢を消す
+    
+    q.choices.forEach(choice => {
+      const btn = document.createElement("button");
+      btn.textContent = choice.text;
+      btn.onclick = () => selectAnswer(choice.scores);
+      choicesDiv.appendChild(btn);
+    });
+  }
+
+  // 選択肢を選んだ時の処理
+  function selectAnswer(scores) {
+    totalScores.buddhism += scores.buddhism;
+    totalScores.christianity += scores.christianity;
+    totalScores.islam += scores.islam;
+    
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+      showQuestion(); // 次の質問へ
+    } else {
+      showResult(); // 終わったら結果発表へ
+    }
+  }
+
+  // 結果を発表する関数
+  function showResult() {
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("result").style.display = "block";
+    
+    // 一番点数が高いものを探す
+    let maxScore = -1;
+    let finalResult = "";
+    for (const [rel, score] of Object.entries(totalScores)) {
+      if (score > maxScore) {
+        maxScore = score;
+        finalResult = rel;
+      }
+    }
+    
+    document.getElementById("result-name").textContent = results[finalResult].name;
+    document.getElementById("result-desc").textContent = results[finalResult].desc;
+  }
+
+  // 最初の質問を表示してスタート
+  showQuestion();
+</script>
+
+</body>
+</html>
