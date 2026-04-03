@@ -10,11 +10,22 @@
   h1 { font-size: 22px; color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 12px; margin-bottom: 20px;}
   h2 { font-size: 18px; color: #34495e; margin-bottom: 15px;}
   
-  .menu-btn { display: block; width: 100%; padding: 14px; margin: 10px 0; font-size: 15px; font-weight: bold; cursor: pointer; border: none; border-radius: 8px; background-color: #ecf0f1; color: #2c3e50; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-  .menu-btn:hover { background-color: #3498db; color: white; transform: translateY(-2px);}
-  .special-btn { background-color: #ffeaa7; border: 2px solid #fdcb6e; }
-  .special-btn:hover { background-color: #fdcb6e; color: #2d3436; }
+  /* メニューボタンのベース */
+  .menu-btn { display: block; width: 100%; padding: 14px; margin: 12px 0; font-size: 15px; font-weight: bold; cursor: pointer; border-radius: 8px; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+  
+  /* １．宗教用（ブルー系） */
+  .btn-cat1 { background-color: #e0f7fa; border: 2px solid #4dd0e1; color: #006064; }
+  .btn-cat1:hover { background-color: #00bcd4; color: white; border-color: #00bcd4; transform: translateY(-2px); }
 
+  /* ２．規範倫理学用（グリーン系） */
+  .btn-cat2 { background-color: #f1f8e9; border: 2px solid #aed581; color: #33691e; }
+  .btn-cat2:hover { background-color: #8bc34a; color: white; border-color: #8bc34a; transform: translateY(-2px); }
+
+  /* ３〜８．その他哲学用（オレンジ系） */
+  .btn-others { background-color: #fff3e0; border: 2px solid #ffb74d; color: #e65100; }
+  .btn-others:hover { background-color: #ff9800; color: white; border-color: #ff9800; transform: translateY(-2px); }
+
+  /* クイズの選択肢ボタン（全体共通のブルー） */
   .choice-btn { display: block; width: 100%; padding: 14px; margin: 10px 0; font-size: 14px; cursor: pointer; border: 2px solid #3498db; border-radius: 8px; background-color: white; color: #3498db; font-weight: bold; transition: 0.2s; text-align: left; line-height: 1.5; }
   .choice-btn:hover { background-color: #3498db; color: white; }
   
@@ -45,14 +56,16 @@
   <div id="home-screen" class="active-screen">
     <h1>📚 倫理思想マッチング</h1>
     <p style="font-size: 14px;">キミの考え方は、歴史上のどの思想家と同じ？<br>気になるカテゴリを選んで診断しよう！</p>
-    <button class="menu-btn" onclick="startQuiz('religion')">１．宗教 match（5問）</button>
-    <button class="menu-btn" onclick="startQuiz('normative')">２．規範倫理学 match（5問）</button>
-    <button class="menu-btn" onclick="startQuiz('greek')">３．古代ギリシャ哲学 match（5問）</button>
-    <button class="menu-btn" onclick="startQuiz('science')">４．近代科学 match（5問）</button>
-    <button class="menu-btn" onclick="startQuiz('democracy')">５．民主社会と自由 match（5問）</button>
-    <button class="menu-btn special-btn" onclick="startQuiz('existentialism')">６．人間性の回復 match（10問）</button>
-    <button class="menu-btn special-btn" onclick="startQuiz('chinese')">７．中国思想 match（10問）</button>
-    <button class="menu-btn special-btn" onclick="startQuiz('japanese')">８．日本思想 match（10問）</button>
+    
+    <button class="menu-btn btn-cat1" onclick="startQuiz('religion')">１．宗教 match（5問）</button>
+    <button class="menu-btn btn-cat2" onclick="startQuiz('normative')">２．規範倫理学 match（5問）</button>
+    
+    <button class="menu-btn btn-others" onclick="startQuiz('greek')">３．古代ギリシャ哲学 match（5問）</button>
+    <button class="menu-btn btn-others" onclick="startQuiz('science')">４．近代科学 match（5問）</button>
+    <button class="menu-btn btn-others" onclick="startQuiz('democracy')">５．民主社会と自由 match（5問）</button>
+    <button class="menu-btn btn-others" onclick="startQuiz('existentialism')">６．人間性の回復 match（10問）</button>
+    <button class="menu-btn btn-others" onclick="startQuiz('chinese')">７．中国思想 match（10問）</button>
+    <button class="menu-btn btn-others" onclick="startQuiz('japanese')">８．日本思想 match（10問）</button>
     
     <hr style="margin: 25px 0; border: none; border-top: 2px dashed #bdc3c7;">
     
@@ -79,14 +92,14 @@
   <div id="dictionary-menu-screen">
     <h1>📖 思想家図鑑</h1>
     <p style="font-size: 14px; margin-bottom: 20px;">復習したいジャンルを選んでください。</p>
-    <button class="menu-btn" onclick="showDictionaryCategory('religion')">１．宗教</button>
-    <button class="menu-btn" onclick="showDictionaryCategory('normative')">２．規範倫理学</button>
-    <button class="menu-btn" onclick="showDictionaryCategory('greek')">３．古代ギリシャ哲学</button>
-    <button class="menu-btn" onclick="showDictionaryCategory('science')">４．近代科学</button>
-    <button class="menu-btn" onclick="showDictionaryCategory('democracy')">５．民主社会と自由</button>
-    <button class="menu-btn" onclick="showDictionaryCategory('existentialism')">６．人間性の回復</button>
-    <button class="menu-btn" onclick="showDictionaryCategory('chinese')">７．中国思想</button>
-    <button class="menu-btn" onclick="showDictionaryCategory('japanese')">８．日本思想</button>
+    <button class="menu-btn btn-cat1" onclick="showDictionaryCategory('religion')">１．宗教</button>
+    <button class="menu-btn btn-cat2" onclick="showDictionaryCategory('normative')">２．規範倫理学</button>
+    <button class="menu-btn btn-others" onclick="showDictionaryCategory('greek')">３．古代ギリシャ哲学</button>
+    <button class="menu-btn btn-others" onclick="showDictionaryCategory('science')">４．近代科学</button>
+    <button class="menu-btn btn-others" onclick="showDictionaryCategory('democracy')">５．民主社会と自由</button>
+    <button class="menu-btn btn-others" onclick="showDictionaryCategory('existentialism')">６．人間性の回復</button>
+    <button class="menu-btn btn-others" onclick="showDictionaryCategory('chinese')">７．中国思想</button>
+    <button class="menu-btn btn-others" onclick="showDictionaryCategory('japanese')">８．日本思想</button>
     
     <button class="action-btn" onclick="goHome()" style="margin-top: 25px;">🏠 トップに戻る</button>
   </div>
@@ -102,7 +115,7 @@
 </div>
 
 <script>
-  /* ====== 思想家図鑑データ（キーワード完全網羅） ====== */
+  /* ====== 思想家図鑑データ ====== */
   const dictData = {
     buddhism: { category: "宗教", name: "仏教", keywords: "四諦 / 八正道 / 慈悲 / 縁起", desc: "すべてのものは繋がり合っていると考え、自分の心を見つめて苦しみを滅することを目指します。" },
     christianity: { category: "宗教", name: "キリスト教", keywords: "アガペー（神の愛） / 隣人愛 / 贖罪", desc: "神の無償の愛を信じ、見返りを求めずに他者を自分のように愛することを大切にします。" },
@@ -159,7 +172,7 @@
     yanagita: { category: "日本思想", name: "柳田国男", keywords: "常民 / 民俗学", desc: "政治や歴史の表舞台には出ない、名もなき普通の人々（常民）の生活の道具や民間伝承を研究し、日本人の精神の基層を探求しました。" }
   };
 
-  /* ====== クイズデータ（全カテゴリ充実・キーワード隠し済） ====== */
+  /* ====== クイズデータ ====== */
   const quizData = {
     religion: { title: "宗教 match", scores: { buddhism: 0, christianity: 0, islam: 0 }, questions: [ 
       { text: "Q1. 世界はどうやってできたと思う？", choices: [ { text: "すべては互いに影響し合って、絶えず変化しながら存在している。", scores: { buddhism: 2 } }, { text: "人間を深く愛する大きな存在が、世界を美しく創り上げた。", scores: { christianity: 2 } }, { text: "絶対的で全知全能の存在が、明確な意志を持って創造した。", scores: { islam: 2 } } ] },
@@ -323,7 +336,6 @@
       const itemDiv = document.createElement("div");
       itemDiv.className = "dict-item";
       
-      // クイズ直後に「登場した図鑑を見る」から来た場合のみ、結果に色を付ける
       if (currentCategory === categoryKey && key === currentMatchedId) {
         itemDiv.style.borderLeftColor = "#e74c3c";
         itemDiv.style.backgroundColor = "#fdf2f0";
