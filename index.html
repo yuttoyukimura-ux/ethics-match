@@ -35,7 +35,7 @@
   .dict-name { font-size: 16px; font-weight: bold; color: #2c3e50; margin: 0 0 5px 0;}
   .dict-key { font-size: 12px; color: #e67e22; margin: 0 0 8px 0; font-weight: bold;}
   .dict-text { font-size: 13px; line-height: 1.5; color: #555;}
-  .dict-category-title { font-size: 18px; color: #34495e; border-bottom: 2px solid #bdc3c7; padding-bottom: 5px; margin-top: 25px; margin-bottom: 12px; text-align: left;}
+  .dict-category-title { font-size: 18px; color: #34495e; border-bottom: 2px solid #bdc3c7; padding-bottom: 5px; margin-top: 10px; margin-bottom: 15px; text-align: left; font-weight: bold;}
 </style>
 </head>
 <body>
@@ -66,20 +66,20 @@
     <div class="result-title" id="result-name"></div>
     <div class="result-keywords" id="result-keywords"></div>
     <div class="result-desc" id="result-desc"></div>
-    <button class="dict-btn" onclick="showDictionary()">📖 全思想家の図鑑を見る</button>
+    <button class="dict-btn" onclick="showDictionary()">📖 登場した思想家の図鑑を見る</button>
     <button class="action-btn" onclick="goHome()">🏠 トップメニューに戻る</button>
   </div>
 
   <div id="dictionary-screen">
     <h1>📖 思想家図鑑</h1>
-    <p style="font-size: 13px; color: #7f8c8d; margin-bottom: 15px;">マッチングに登場する全思想家の解説です。キーワードと結びつけて復習しよう！</p>
+    <p style="font-size: 13px; color: #7f8c8d; margin-bottom: 15px;">今回マッチングに登場した思想家の解説です。キーワードと結びつけて復習しよう！</p>
     <div id="dictionary-content"></div>
     <button class="action-btn" onclick="goHome()" style="margin-top: 20px;">🏠 トップに戻る</button>
   </div>
 </div>
 
 <script>
-  /* ====== 思想家図鑑データ（キーワード完全網羅） ====== */
+  /* ====== 思想家図鑑データ ====== */
   const dictData = {
     // 宗教・規範倫理
     buddhism: { category: "宗教", name: "仏教", keywords: "四諦 / 八正道 / 慈悲 / 縁起", desc: "すべてのものは繋がり合っていると考え、自分の心を見つめて苦しみを滅することを目指します。" },
@@ -149,14 +149,14 @@
     yanagita: { category: "日本思想", name: "柳田国男", keywords: "常民 / 民俗学", desc: "政治や歴史の表舞台には出ない、名もなき普通の人々（常民）の生活の道具や民間伝承を研究し、日本人の精神の基層を探求しました。" }
   };
 
-  /* ====== クイズデータ（全カテゴリ充実・キーワード隠し済） ====== */
+  /* ====== クイズデータ ====== */
   const quizData = {
     religion: { title: "宗教 match", scores: { buddhism: 0, christianity: 0, islam: 0 }, questions: [ 
       { text: "Q1. 世界はどうやってできたと思う？", choices: [ { text: "すべては互いに影響し合って、絶えず変化しながら存在している。", scores: { buddhism: 2 } }, { text: "人間を深く愛する大きな存在が、世界を美しく創り上げた。", scores: { christianity: 2 } }, { text: "絶対的で全知全能の存在が、明確な意志を持って創造した。", scores: { islam: 2 } } ] },
       { text: "Q2. 人生で一番「ツラいこと・苦しいこと」があった時、どう捉える？", choices: [ { text: "「自分を成長させるための試練だ」と捉え、乗り越えられると信じる。", scores: { christianity: 2 } }, { text: "「これもあらかじめ決められた運命だ」と受け入れ、従う。", scores: { islam: 2 } }, { text: "「自分の過度な欲求や執着が原因だ」と考え、自分の心を見つめ直す。", scores: { buddhism: 2 } } ] },
       { text: "Q3. 生きていく上で、一番大切にしたいルールは？", choices: [ { text: "あらかじめ定められた絶対的なルールを、日々の生活で厳密に守る。", scores: { islam: 2 } }, { text: "自分の欲望に振り回されず、心をコントロールして穏やかに生きる。", scores: { buddhism: 2 } }, { text: "見返りを求めず、他者に対して無条件の愛や優しさを注ぐ。", scores: { christianity: 2 } } ] },
       { text: "Q4. 「困っている人」に対して、社会はどうあるべき？", choices: [ { text: "貧しい人へ寄付をすることを、社会全員の『義務』としてルール化するべき。", scores: { islam: 2 } }, { text: "すべての生き物の苦しみに共感し、慈しみの心で優しく接するべき。", scores: { buddhism: 2 } }, { text: "社会の最も弱い立場にいる人たちこそ、家族のように愛して助け合うべき。", scores: { christianity: 2 } } ] },
-      { text: "Q5. 人生の最終的な「理想のゴール」はどこにあると思う？", choices: [ { text: "愛による救済を受け、争いのない平和な国（天国）へ行くこと。", scores: { christianity: 2 } }, { text: "人生の最後に自分の善行が認められ、豊かな楽園に行くこと。", scores: { islam: 2 } }, { text: "あらゆる苦しみや迷いから完全に解放された、絶対的な心の平安。", scores: { buddhism: 2 } } ] }
+      { text: "Q5. 人生の最終的な「理想のゴール」はどこにあると思う？", choices: [ { text: "愛による救済を受け、争いのない平和な国へ行くこと。", scores: { christianity: 2 } }, { text: "人生の最後に自分の善行が認められ、豊かな楽園に行くこと。", scores: { islam: 2 } }, { text: "あらゆる苦しみや迷いから完全に解放された、絶対的な心の平安。", scores: { buddhism: 2 } } ] }
     ]},
     normative: { title: "規範倫理学 match", scores: { util: 0, deontology: 0, virtue: 0 }, questions: [ 
       { text: "Q1. 友達の新しい髪型が、正直すごく変だった時、どうする？", choices: [ { text: "正直に言う。「嘘をつかない」というルールは絶対に守るべきだから。", scores: { deontology: 2 } }, { text: "似合ってると嘘をつく。その方が友達が喜んで結果的にハッピーになるから。", scores: { util: 2 } }, { text: "相手を傷つけない言い方で寄り添う。思いやりのある人間でありたいから。", scores: { virtue: 2 } } ] },
@@ -297,17 +297,19 @@
     const content = document.getElementById("dictionary-content");
     content.innerHTML = ""; 
     
-    let currentCat = "";
-    for (const key in dictData) {
+    // 現在のカテゴリに属する思想家のみを抽出
+    const currentCategoryKeys = Object.keys(quizData[currentCategory].scores);
+    
+    // タイトル追加
+    const catTitle = document.createElement("div");
+    catTitle.className = "dict-category-title";
+    catTitle.textContent = "▼ " + quizData[currentCategory].title.replace(" match", "") + "の思想家一覧";
+    content.appendChild(catTitle);
+
+    currentCategoryKeys.forEach(key => {
       const data = dictData[key];
-      if (data.category !== currentCat) {
-        const catTitle = document.createElement("div");
-        catTitle.className = "dict-category-title";
-        catTitle.textContent = "▼ " + data.category;
-        content.appendChild(catTitle);
-        currentCat = data.category;
-      }
-      
+      if (!data) return;
+
       const itemDiv = document.createElement("div");
       itemDiv.className = "dict-item";
       if (key === currentMatchedId) {
@@ -321,7 +323,7 @@
         <div class="dict-text">${data.desc}</div>
       `;
       content.appendChild(itemDiv);
-    }
+    });
     
     switchScreen("dictionary-screen");
   }
