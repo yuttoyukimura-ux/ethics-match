@@ -59,7 +59,7 @@
     <p style="font-size: 14px;">キミの考え方は、歴史上のどの思想家と同じ？<br>気になるカテゴリを選んで診断しよう！</p>
     
     <button class="menu-btn btn-cat1" onclick="startQuiz('religion')">１．宗教 match（5問）</button>
-    <button class="menu-btn btn-cat2" onclick="startQuiz('normative')">２．規範倫理学(現代の課題) match（5問）</button>
+    <button class="menu-btn btn-cat2" onclick="startQuiz('normative')">２．規範倫理学 match（5問）</button>
     
     <button class="menu-btn btn-others" onclick="startQuiz('greek')">３．古代ギリシャ哲学 match（5問）</button>
     <button class="menu-btn btn-others" onclick="startQuiz('science')">４．近代科学 match（5問）</button>
@@ -184,11 +184,11 @@
       { text: "Q5. 人生の最終的な「理想のゴール」はどこにあると思う？", choices: [ { text: "愛による救済を受け、争いのない平和な国へ行くこと。", scores: { christianity: 2 } }, { text: "人生の最後に自分の善行が認められ、豊かな楽園に行くこと。", scores: { islam: 2 } }, { text: "あらゆる苦しみや迷いから完全に解放された、絶対的な心の平安。", scores: { buddhism: 2 } } ] }
     ]},
     normative: { title: "規範倫理学(現代の課題) match", scores: { util: 0, deontology: 0, virtue: 0 }, questions: [ 
-      { text: "Q1. 【全体方針】「正しいこと」を決める時、あなたが一番大切にするのは？", choices: [ { text: "結果的に、世の中の『ハッピー（幸福）』の合計が一番大きくなること。", scores: { util: 2 } }, { text: "どんな時でも絶対に守るべき『普遍的なルール（義務）』に従っているか。", scores: { deontology: 2 } }, { text: "その行動が、思いやりや勇気のある『立派な人間（人柄）』にふさわしいか。", scores: { virtue: 2 } } ] },
-      { text: "Q2. 【生命倫理】人工妊娠中絶について、どう考える？", choices: [ { text: "親の心身の負担や経済的状況など、関わる人全員の幸福と苦痛を計算して判断すべきだ。", scores: { util: 2 } }, { text: "胎児も一つの「命」であり、「命を奪ってはいけない」という絶対のルールに従うべきだ。", scores: { deontology: 2 } }, { text: "単なる計算やルールではなく、親としての「愛情」や「責任感」をどう持つべきかで考えるべきだ。", scores: { virtue: 2 } } ] },
-      { text: "Q3. 【社会倫理】死刑制度について、あなたの意見は？", choices: [ { text: "凶悪犯罪の抑止力になり、社会全体の安全（最大の幸福）に繋がるなら存続してもよい。", scores: { util: 2 } }, { text: "人の命は目的そのものであり、国であっても「命を奪う」という手段をとるべきではない。", scores: { deontology: 2 } }, { text: "罪を犯した者でも、社会の中で反省し、人間性（良い品性）を回復する機会を与える社会でありたい。", scores: { virtue: 2 } } ] },
-      { text: "Q4. 【環境倫理】開発のために森を切り拓く計画。自然環境はどう扱うべき？", choices: [ { text: "開発によって得られる人間の豊かさと、失われる自然の価値を天秤にかけて計算する。", scores: { util: 2 } }, { text: "人間だけでなく自然そのものにも「生きる権利」があると認め、無条件に守る義務がある。", scores: { deontology: 2 } }, { text: "自然に対して「畏敬の念」や「謙虚さ」を持ち、調和して生きることこそが人間の立派なあり方だ。", scores: { virtue: 2 } } ] },
-      { text: "Q5. 【世代間倫理】まだ見ぬ「未来の世代」に対して、私たちはどんな責任がある？", choices: [ { text: "現在の私たちの利益と、未来の世代の不利益を計算し、トータルの幸福が最大になる道を探る。", scores: { util: 2 } }, { text: "まだ見ぬ未来の人であっても、彼らの生存権を脅かさないことは今の私たちの絶対的な義務だ。", scores: { deontology: 2 } }, { text: "未来を思いやる「想像力」を養い、責任ある大人として日々の行動を選ぶことがより良い社会を作る。", scores: { virtue: 2 } } ] }
+      { text: "Q1. 「正しいこと」を決める時、あなたが一番大切にするのは？", choices: [ { text: "結果的に、世の中の『ハッピー（幸福）』の合計が一番大きくなること。", scores: { util: 2 } }, { text: "どんな時でも絶対に守るべき『普遍的なルール（義務）』に従っているか。", scores: { deontology: 2 } }, { text: "その行動が、思いやりや勇気のある『立派な人間（人柄）』にふさわしいか。", scores: { virtue: 2 } } ] },
+      { text: "Q2. 人工妊娠中絶について、どう考える？", choices: [ { text: "親の心身の負担や経済的状況など、関わる人全員の幸福と苦痛を計算して判断すべきだ。", scores: { util: 2 } }, { text: "胎児も一つの「命」であり、「命を奪ってはいけない」という絶対のルールに従うべきだ。", scores: { deontology: 2 } }, { text: "単なる計算やルールではなく、親としての「愛情」や「責任感」をどう持つべきかで考えるべきだ。", scores: { virtue: 2 } } ] },
+      { text: "Q3. 死刑制度について、あなたの意見は？", choices: [ { text: "凶悪犯罪の抑止力になり、社会全体の安全（最大の幸福）に繋がるなら存続してもよい。", scores: { util: 2 } }, { text: "人の命は目的そのものであり、国であっても「命を奪う」という手段をとるべきではない。", scores: { deontology: 2 } }, { text: "罪を犯した者でも、社会の中で反省し、人間性（良い品性）を回復する機会を与える社会でありたい。", scores: { virtue: 2 } } ] },
+      { text: "Q4. 開発のために森を切り拓く計画。自然環境はどう扱うべき？", choices: [ { text: "開発によって得られる人間の豊かさと、失われる自然の価値を天秤にかけて計算する。", scores: { util: 2 } }, { text: "人間だけでなく自然そのものにも「生きる権利」があると認め、無条件に守る義務がある。", scores: { deontology: 2 } }, { text: "自然に対して「畏敬の念」や「謙虚さ」を持ち、調和して生きることこそが人間の立派なあり方だ。", scores: { virtue: 2 } } ] },
+      { text: "Q5. まだ見ぬ「未来の世代」に対して、私たちはどんな責任がある？", choices: [ { text: "現在の私たちの利益と、未来の世代の不利益を計算し、トータルの幸福が最大になる道を探る。", scores: { util: 2 } }, { text: "まだ見ぬ未来の人であっても、彼らの生存権を脅かさないことは今の私たちの絶対的な義務だ。", scores: { deontology: 2 } }, { text: "未来を思いやる「想像力」を養い、責任ある大人として日々の行動を選ぶことがより良い社会を作る。", scores: { virtue: 2 } } ] }
     ]},
     greek: { title: "古代ギリシャ哲学 match", scores: { socrates: 0, plato: 0, aristotle: 0 }, questions: [
       { text: "Q1. 新しいことを学ぶときや、議論するときの理想の姿勢は？", choices: [ { text: "知ったかぶりをせず、「それってどういう意味？」と相手と徹底的に話し合って本質を探る。", scores: { socrates: 2 } }, { text: "現実の不完全なものに妥協せず、理性を使って「永遠に変わらない完璧な理想の姿」を思い描き、それを追い求める。", scores: { plato: 2 } }, { text: "現実のデータをしっかり観察し、極端な意見を避けて、誰もが納得できる「バランスの良い結論」を導き出す。", scores: { aristotle: 2 } } ] },
