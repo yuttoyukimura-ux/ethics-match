@@ -30,6 +30,13 @@
   .result-title { font-size: 24px; color: #e74c3c; margin: 10px 0; font-weight: bold;}
   .result-catchphrase { font-size: 16px; color: #e67e22; font-weight: bold; margin-bottom: 15px;}
   
+  /* 思想成分パラメーター用CSS */
+  .result-breakdown { margin: 20px 0; background: #fafafa; padding: 15px; border-radius: 8px; border: 2px solid #ecf0f1; }
+  .breakdown-title { font-size: 15px; color: #2c3e50; border-bottom: 2px solid #bdc3c7; padding-bottom: 8px; margin-bottom: 12px; font-weight: bold; text-align: center;}
+  .breakdown-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 14px; }
+  .breakdown-name { font-weight: bold; color: #34495e; width: 55%; text-align: left;}
+  .breakdown-stars { color: #f1c40f; width: 45%; text-align: right; letter-spacing: 2px; font-size: 16px;}
+
   .result-keywords { font-size: 13px; color: #2980b9; margin-bottom: 15px; font-weight: bold; background: #e8f4f8; padding: 10px; border-radius: 6px; text-align: left;}
   .result-desc { font-size: 14px; line-height: 1.7; text-align: left; background: #fdf2f0; padding: 15px; border-radius: 8px; margin-bottom: 20px;}
   
@@ -77,6 +84,9 @@
     <h2>あなたの考え方はこの人に近い！</h2>
     <div class="result-title" id="result-name"></div>
     <div class="result-catchphrase" id="result-catchphrase"></div>
+    
+    <div id="result-breakdown" class="result-breakdown"></div>
+
     <div class="result-keywords" id="result-keywords"></div>
     <div class="result-desc" id="result-desc"></div>
     <button class="dict-btn" onclick="showDictionaryCategory(currentCategory)">📖 登場した思想家の図鑑を見る</button>
@@ -107,28 +117,19 @@
 </div>
 
 <script>
-  /* ====== 思想家図鑑データ（全思想家キャッチコピー完全網羅！） ====== */
+  /* ====== 思想家図鑑データ ====== */
   const dictData = {
-    // 宗教
     buddhism: { category: "宗教", name: "仏教", catchphrase: "「自分の心と向き合うストイック僧侶」", keywords: "四諦 / 八正道 / 慈悲 / 縁起", desc: "すべてのものは繋がり合っていると考え、自分の心を見つめて苦しみを滅することを目指します。" },
     christianity: { category: "宗教", name: "キリスト教", catchphrase: "「愛とゆるしのボランティア精神」", keywords: "アガペー（神の愛） / 隣人愛 / 贖罪", desc: "神の無償の愛を信じ、見返りを求めずに他者を自分のように愛することを大切にします。" },
     islam: { category: "宗教", name: "イスラム教", catchphrase: "「神への絶対服従！規律を守る真面目人」", keywords: "アッラー / 六信五行 / クルアーン", desc: "絶対的な神への服従を誓い、日常生活の中で定められた規律を厳格に守ることを重んじます。" },
-    
-    // 規範倫理学
     util: { category: "規範倫理学", name: "功利主義（ベンサム、ミル）", catchphrase: "「数字と結果がすべて！超・合理的な計算マスター」", keywords: "結果主義 / 快楽計算 / 最大多数の最大幸福", desc: "動機やルールよりも「結果としてどれだけ多くの人をハッピーにできたか」を正しい行いの基準とします。常にメリットとデメリットを天秤にかけて合理的に判断するクールな思考の持ち主です。" },
     deontology: { category: "規範倫理学", name: "義務論（カント）", catchphrase: "「ルールは絶対！ブレない鋼のメンタル」", keywords: "動機主義 / 定言命法 / 人格の尊厳", desc: "結果や損得に関係なく、「絶対に守るべき普遍的なルール」に従うこと自体を善とします。相手を自分の利益の道具にせず、命や権利を無条件に尊重する気高い精神を持っています。" },
     virtue: { category: "規範倫理学", name: "徳倫理学（アリストテレス等）", catchphrase: "「毎日の習慣が自分をつくる！成長し続ける人格者」", keywords: "卓越性 / キャラクター（人柄） / 共同体", desc: "「どんなルールを守るか」よりも、日々の行動の積み重ねで「思いやりや勇気のある立派な人間（人柄）になれるか」を重視します。周囲の人との温かい関係性の中でより良く生きようとするタイプです。" },
-
-    // 古代ギリシャ哲学
     socrates: { category: "古代ギリシャ哲学", name: "ソクラテス", catchphrase: "「『それってどういう意味？』本質を突く論破王」", keywords: "不知の自覚 / 問答法 / 徳 / 魂への配慮", desc: "自分が何も分かっていないことを自覚し、対話を通して真理を探求。魂をより良く生きることを最優先しました。" },
     plato: { category: "古代ギリシャ哲学", name: "プラトン", catchphrase: "「完璧な理想を追い求める究極のロマンチスト」", keywords: "理想主義 / イデア / エロース / 理性気概欲望知恵勇気節制正義", desc: "現実の不完全な世界ではなく、永遠に変わらない完璧な理想（イデア）への愛（エロース）を説いた理想主義者。" },
     aristotle: { category: "古代ギリシャ哲学", name: "アリストテレス", catchphrase: "「現実をしっかり見据えるバランス感覚の鬼」", keywords: "現実主義 / 幸福（エウダイモニア） / 知性的徳 / 倫理的徳 / 正義と友愛", desc: "現実を観察し、極端を避けた「中庸」の行動を習慣化する（倫理的徳）ことで最高の目的である「幸福」を目指しました。" },
-    
-    // 近代科学
     bacon: { category: "近代科学", name: "フランシス・ベーコン", catchphrase: "「事実とデータが命！実践的なリサーチャー」", keywords: "知は力なり / 経験論 / 帰納法 / 実証 / イドラ", desc: "思い込み（イドラ）を排除し、実験や観察の事実から法則を導き出す「帰納法」を提唱。学問で自然を支配しようとしました。" },
     descartes: { category: "近代科学", name: "ルネ・デカルト", catchphrase: "「すべてを疑え！論理的思考のスペシャリスト」", keywords: "われ思う、ゆえにわれあり / 合理論 / 演繹法 / 論証 / 方法的懐疑", desc: "すべてを徹底的に疑い（方法的懐疑）、残った「考えている自分の存在」を確実な土台として論理を組み立てる「演繹法」を提唱。" },
-    
-    // 民主社会と自由
     hobbes: { category: "民主社会と自由", name: "トマス・ホッブズ", catchphrase: "「ルールがなきゃ争うだけ！超・現実主義者」", keywords: "万人の万人に対する闘争 / 社会契約", desc: "人間は自己保存のために争うと考え、平和のためには強力な国家権力に権利を譲り渡す必要があると主張しました。" },
     locke: { category: "民主社会と自由", name: "ジョン・ロック", catchphrase: "「自由と権利は絶対に譲らない！民主主義の父」", keywords: "自然権 / 抵抗権 / 社会契約", desc: "人間は自由や財産を守る権利を持ち、政府がそれを侵害した場合は国民に「抵抗権」があるとし、民主主義の基礎を築きました。" },
     rousseau: { category: "民主社会と自由", name: "ジャン＝ジャック・ルソー", catchphrase: "「みんなの利益が一番大事！熱き平等主義者」", keywords: "一般意志 / 人民主権 / 社会契約", desc: "社会の構成員全員の共通の利益を目指す「一般意志」に従うことこそが、本当の自由と平等を回復する道だと主張しました。" },
@@ -136,16 +137,12 @@
     hegel: { category: "民主社会と自由", name: "G.W.F.ヘーゲル", catchphrase: "「対立を乗り越えて進化する！スケールの大きな統合者」", keywords: "法 / 道徳性 / 人倫 / 家族・市民社会・国家 / 弁証法", desc: "対立を乗り越える「弁証法」で歴史を説明。個人の自由と社会のルールが統合された「人倫」の中で真の自由が実現するとしました。" },
     bentham: { category: "民主社会と自由", name: "ジェレミ・ベンサム", catchphrase: "「社会のハッピーを最大化！クールな計算手」", keywords: "最大多数の最大幸福 / 功利主義", desc: "社会のメンバー全員の快楽の合計から苦痛の合計を引いた値が最大になるような行動や法律が「正しい」としました。" },
     mill: { category: "民主社会と自由", name: "J.S.ミル", catchphrase: "「個性の尊重が第一！少数派を守る自由人」", keywords: "良心 / 質的功利主義 / 危害原則", desc: "快楽には「質」の違いがあるとし、他人に危害を加えない限り個人の自由は最大限尊重されるべきだと説きました。" },
-    
-    // 人間性の回復
     marx: { category: "人間性の回復", name: "カール・マルクス", catchphrase: "「理不尽なシステムをぶっ壊す！熱血の革命家」", keywords: "疎外された労働 / 上部構造 / 生産関係（下部構造） / 社会革命 / 唯物史観 / 共産主義", desc: "資本主義によって人間が労働の喜びを奪われている（疎外）と批判。経済の仕組み（下部構造）を変革する革命を説きました。" },
     kierkegaard: { category: "人間性の回復", name: "セーレン・キルケゴール", catchphrase: "「世間に流されない！自分だけの真理を生きる単独者」", keywords: "主体的真理 / 実存 / 美的実存 / 倫理的実存 / 宗教的実存", desc: "客観的な事実よりも「私が命を懸けられる真理」を重視。絶望の果てに、神の前に立つ「宗教的実存」へと飛躍することを説きました。" },
     nietzsche: { category: "人間性の回復", name: "フリードリヒ・ニーチェ", catchphrase: "「運命なんて笑い飛ばせ！我が道をゆく超人」", keywords: "ニヒリズム / 神は死んだ / 超人", desc: "絶対的な価値（神）が崩壊した時代（ニヒリズム）において、自分の力で新しい価値を生み出し運命を愛する「超人」を理想としました。" },
     jaspers: { category: "人間性の回復", name: "カール・ヤスパース", catchphrase: "「絶望の先で本当の自分に出会う！誠実な対話者」", keywords: "限界状況 / 超越者 / 実存的交わり", desc: "死や絶望などの壁（限界状況）にぶつかった時、他者と包み隠さず語り合う（実存的交わり）ことで真の自分に目覚めるとしました。" },
     heidegger: { category: "人間性の回復", name: "マルティン・ハイデッガー", catchphrase: "「『死』を意識して今を生きる！世間に染まらない現存在」", keywords: "死への存在 / ひと（世人、ダス・マン）", desc: "世間の噂話に流される生き方（ダス・マン）を批判。自分が「いつか死ぬ存在」だと自覚することで、本来の自己を取り戻せるとしました。" },
     sartre: { category: "人間性の回復", name: "ジャン＝ポール・サルトル", catchphrase: "「自分の人生は自分で決める！絶対的自由の行動派」", keywords: "自由 / 実存は本質に先立つ / アンガジュマン", desc: "人間にあらかじめ決まった本質はなく、自らの行動で自分を創り上げると主張。自由の責任を引き受け、社会に参加すること（アンガジュマン）を説きました。" },
-    
-    // 中国思想
     confucius: { category: "中国思想", name: "孔子", catchphrase: "「思いやりと礼儀を忘れない！信頼されるリーダー」", keywords: "道 / 仁 / 礼 / 孝悌 / 君子 / 徳治主義", desc: "家族への愛（孝悌）を基礎とする思いやり（仁）と、それを形に表す作法（礼）を身につけた「君子」による道徳的な政治を理想としました。" },
     mencius: { category: "中国思想", name: "孟子", catchphrase: "「人間の善を信じる！王道をゆく理想主義者」", keywords: "四端 / 性善説 / 四徳", desc: "人間は生まれながらに善に向かう芽（四端）を持っているとする性善説を唱え、王道政治を主張しました。" },
     xunzi: { category: "中国思想", name: "荀子", catchphrase: "「ルールで自分を律する！努力と学びの現実主義者」", keywords: "性悪説 / 礼治", desc: "人間は放っておけば欲望に流されるとする性悪説を唱え、後天的な学びや厳しいルール（礼）による矯正が必要だとしました。" },
@@ -156,8 +153,6 @@
     hanfeizi: { category: "中国思想", name: "韓非子", catchphrase: "「感情よりシステム！冷徹で有能なマネージャー」", keywords: "法家 / 信賞必罰", desc: "人間の善意や道徳を信用せず、厳格な法律と明確なアメとムチ（信賞必罰）によって国を統治するべきだと主張しました。" },
     mozi: { category: "中国思想", name: "墨子", catchphrase: "「みんなを平等に愛す！絶対非戦の熱血平和主義者」", keywords: "兼愛 / 非攻", desc: "自分と他人の区別なく世界中の人を平等に愛すること（兼愛）を説き、侵略戦争を絶対悪（非攻）として否定した熱き平和主義者です。" },
     sunzi: { category: "中国思想", name: "孫子", catchphrase: "「戦わずして勝つ！冷静沈着な天才ストラテジスト」", keywords: "兵法 / 不戦而屈人の兵", desc: "戦争は国家の重大事であるとし、敵と味方を冷静に分析して「できれば戦わずして勝つ」ことを最上の戦略とした兵法家です。" },
-    
-    // 日本思想
     saicho: { category: "日本思想", name: "最澄", catchphrase: "「みんなの中に光がある！真面目で一途なエリート」", keywords: "仏性 / 天台宗", desc: "すべての生き物に仏になる性質（仏性）があると説き、比叡山延暦寺を開いて厳しい修行を重んじました。" },
     kukai: { category: "日本思想", name: "空海", catchphrase: "「今の自分のままで完璧！マルチな天才クリエイター」", keywords: "大日如来 / 密教 / 即身成仏", desc: "宇宙の真理そのものである大日如来と一体化し、この現実の肉体のままで仏になれる（即身成仏）という密教を説きました。" },
     honen: { category: "日本思想", name: "法然", catchphrase: "「難しい理屈は抜き！ひたすら信じるピュアな心」", keywords: "末法の世 / 南無阿弥陀仏 / 専修念仏", desc: "厳しい修行ができない末法の世において、ただひたすら「南無阿弥陀仏」と唱えること（専修念仏）で誰もが救われると説きました。" },
@@ -315,7 +310,6 @@
     
     const resultData = dictData[currentMatchedId];
     if(resultData) {
-      // キャッチコピーがある場合のみ表示
       if(resultData.catchphrase) {
         document.getElementById("result-catchphrase").textContent = resultData.catchphrase;
         document.getElementById("result-catchphrase").style.display = "block";
@@ -324,6 +318,35 @@
       }
       
       document.getElementById("result-name").textContent = resultData.name;
+      
+      // パラメーター生成
+      const breakdownDiv = document.getElementById("result-breakdown");
+      breakdownDiv.innerHTML = "<div class='breakdown-title'>あなたの思想成分パラメーター</div>";
+      
+      let sortedScores = [];
+      for (const [key, score] of Object.entries(currentScores)) {
+        sortedScores.push({ key: key, score: score });
+      }
+      sortedScores.sort((a, b) => b.score - a.score);
+
+      const maxDisplay = Math.min(3, sortedScores.length);
+      const maxPossibleScore = quizData[currentCategory].questions.length * 2;
+
+      for (let i = 0; i < maxDisplay; i++) {
+        const item = sortedScores[i];
+        const philosopherName = dictData[item.key].name.split("（")[0]; // カッコなどを省略してスッキリ表示
+        const starCount = Math.round((item.score / maxPossibleScore) * 5);
+        const emptyCount = 5 - starCount;
+        const starsHtml = "★".repeat(starCount) + "☆".repeat(emptyCount);
+
+        breakdownDiv.innerHTML += `
+          <div class="breakdown-item">
+            <div class="breakdown-name">${i + 1}位：${philosopherName}</div>
+            <div class="breakdown-stars">${starsHtml}</div>
+          </div>
+        `;
+      }
+
       document.getElementById("result-keywords").innerHTML = "🔑 <span style='color:#e67e22'>キーワード:</span> " + resultData.keywords;
       document.getElementById("result-desc").innerHTML = resultData.desc.replace(/\n/g, '<br>');
     }
